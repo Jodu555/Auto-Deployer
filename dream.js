@@ -1,9 +1,13 @@
+const fs = require('fs');
+const path = require('path');
 /**
  * Important:
  *      This is just dream code (how i want this code to look)
  *      This code dont works its just an Convention
  *      Of what i would like this to be
  */
+const deploymentsDirectory = path.join(process.cwd(), 'deployments');
+console.log(deploymentsDirectory);
 
 class Deploy {
     constructor(ID, steps) {
@@ -12,7 +16,6 @@ class Deploy {
     }
 
     createDeploy() {
-
     }
     deleteDeploy() {
 
@@ -40,7 +43,7 @@ class Host {
     }
 }
 
-registerDepoy('project-name-html', ['Download', 'Deletion', 'Upload'], (deploy, host) => {
+registerDeploy('project-name-html', ['Download', 'Deletion', 'Upload'], (deploy, host) => {
     deploy.createDeploy(); // Creates a dir to do the deploy in
     deploy.exec('git pull origin master'); // Executes any ssh-deploy command in the dir
     deploy.step(); // Steps to the next in this case 'Deletion'
@@ -56,7 +59,7 @@ registerDepoy('project-name-html', ['Download', 'Deletion', 'Upload'], (deploy, 
     deploy.deleteDeploy(); // Deletes the dir where the deploy was done
 });
 
-function registerDepoy(name, steps, cb) {
-    console.log(name, steps, cb(new Deploy(name, steps)));
+function registerDeploy(name, steps, cb) {
+    console.log(name, steps, cb(new Deploy(name, steps), new Host()));
 }
 

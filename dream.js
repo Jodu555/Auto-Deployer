@@ -28,6 +28,18 @@ class SSH {
     }
 }
 
+class Host {
+    connect() {
+
+    }
+    upload() {
+
+    }
+    disconnect() {
+
+    }
+}
+
 registerDepoy('project-name-html', ['Download', 'Deletion', 'Upload'], (ssh, host) => {
     ssh.createDeploy(); // Creates a dir to do the deploy in
     ssh.exec('git pull origin master'); // Executes any ssh command in the dir
@@ -40,6 +52,7 @@ registerDepoy('project-name-html', ['Download', 'Deletion', 'Upload'], (ssh, hos
     host.connect('IP-DEPLOY-SERVER', 'username', 'password', 'PATH-TO-DIR'); // Connects to the deploy host and decides the path to upload in this case: /var/ww/html/proj
     host.upload(); // This will upload everything left in the dir
     host.upload('PATH');// This will upload everything in the path
+    host.disconnect(); // Cleanes the connection
     ssh.deleteDeploy(); // Deletes the dir where the deploy was done
 });
 

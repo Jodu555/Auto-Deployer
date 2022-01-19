@@ -28,7 +28,7 @@ class Deploy {
         fs.mkdirSync(this.dir);
     }
     deleteDeploy() {
-
+        fs.rmdirSync(this.dir);
     }
     exec() {
 
@@ -41,8 +41,11 @@ class Deploy {
             this.currStep = null;
         }
     }
-    delete() {
-
+    delete(arg) {
+        arg = Array.isArray(arg) ? arg : [arg];
+        arg.forEach(file => {
+            fs.rmSync(path.join(this.dir, file));
+        });
     }
 }
 

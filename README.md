@@ -12,19 +12,19 @@ An Selfmade Deployment system for some self education
 	- which ssh's into other servers to upload the necessary files
 
 ### Deployment Step Ideas
-* Steps for vueJS client deploy:
+* Steps for a Vue deploy:
     - Pull down code
     - run npm run build
     - delete all except dist
     - Move the dist to anoter folder
 
-* Step for a normal thml deploy:
+* Step for a HTML deploy:
     - Pull down code
     - delete .gitignore 
     - delete Readme
     - move all other to the specified location
 
-* Steps for nodejs deployment:
+* Steps for a Nodejs deployment:
     - Pull down the code
     - Delete unused files
     - somehow restart the running node process (maybe nodemon) || Kill the old screen and just start a new one

@@ -1,0 +1,21 @@
+{
+	"name": "Auto-Deployer",
+	"version": "1.0.0",
+	"description": "An Selfmade Deployment system for some self education",
+	"main": "index.js",
+	"scripts": {
+		"start": "node src/index.js",
+		"dev": "nodemon src/index.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Jodu555/Auto-Deployer.git"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/Jodu555/Auto-Deployer/issues"
+	},
+	"homepage": "https://github.com/Jodu555/Auto-Deployer#readme"
+}

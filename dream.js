@@ -19,7 +19,6 @@ class Deploy {
     }
 
     currentStep() {
-        console.log(123);
         return this.currStep ? this.currStep : this.steps[this.stepIdx];
     }
 
@@ -61,16 +60,8 @@ class Host {
     }
 }
 
-const deploy = new Deploy('Test-123', ['Download', 'Test', 'Deletion', 'Upload']);
-console.log(deploy.currentStep());
-deploy.step();
-console.log(deploy.currentStep());
-deploy.step();
-console.log(deploy.currentStep());
-deploy.step('Build');
-console.log(deploy.currentStep());
-deploy.step();
-console.log(deploy.currentStep());
+const deploy = new Deploy('Test-123', ['Download', 'Test', 'Build', 'Deletion', 'Upload']);
+console.log();
 
 // registerDeploy('project-name-html', ['Download', 'Deletion', 'Upload'], (deploy, host) => {
 //     deploy.createDeploy(); // Creates a dir to do the deploy in

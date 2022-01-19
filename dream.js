@@ -5,6 +5,29 @@
  *      Of what i would like this to be
  */
 
+class SSH {
+    constructor(ID, steps) {
+        this.ID = ID;
+        this.steps = steps;
+    }
+
+    createDeploy() {
+
+    }
+    deleteDeploy() {
+
+    }
+    exec() {
+
+    }
+    step() {
+
+    }
+    delete() {
+
+    }
+}
+
 registerDepoy('project-name-html', ['Download', 'Deletion', 'Upload'], (ssh, host) => {
     ssh.createDeploy(); // Creates a dir to do the deploy in
     ssh.exec('git pull origin master'); // Executes any ssh command in the dir
@@ -17,9 +40,10 @@ registerDepoy('project-name-html', ['Download', 'Deletion', 'Upload'], (ssh, hos
     host.connect('IP-DEPLOY-SERVER', 'username', 'password', 'PATH-TO-DIR'); // Connects to the deploy host and decides the path to upload in this case: /var/ww/html/proj
     host.upload(); // This will upload everything left in the dir
     host.upload('PATH');// This will upload everything in the path
-    deleteDeploy(); // Deletes the dir where the deploy was done
+    ssh.deleteDeploy(); // Deletes the dir where the deploy was done
 });
 
 function registerDepoy(name, steps, cb) {
-    console.log(name, steps, cb);
+    console.log(name, steps, cb(new SSH(name, steps)));
 }
+

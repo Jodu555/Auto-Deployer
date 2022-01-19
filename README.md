@@ -28,3 +28,10 @@ An Selfmade Deployment system for some self education
     - Pull down the code
     - Delete unused files
     - somehow restart the running node process (maybe nodemon) || Kill the old screen and just start a new one
+
+
+### Stretch
+* [ ] Implement a database
+    * [ ] Log every deployment
+    * [ ] Display Deployments in an ui
+* [ ] Implement multiple deploy hosts

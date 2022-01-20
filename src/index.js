@@ -34,7 +34,7 @@ const { errorHandling, notFound, githubSignatureVerifier } = require('./utils/mi
 
 app.post('/webhook', githubSignatureVerifier, (req, res, next) => {
     console.log(req.body);
-    const { repository, head_commit: commit } = req.body.repository;
+    const { repository, head_commit: commit } = req.body;
 
     const { name, id, full_name, url, description, pusher } = repository;
     const { id: commit_id, message, timestamp, author, added, removed, modified } = commit;

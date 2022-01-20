@@ -1,21 +1,10 @@
 const crypto = require('crypto')
 
-const sigHeaderName = 'x-hub-signature'
-const sigHashAlg = 'sha256'
-
 const secret = process.env.GH_WEBHOOK_SECRET || 'Test123';
 
 const githubSignatureVerifier = (req, res, next) => {
-    console.log(req.headers);
-
     const computedSignature = `sha1=${crypto.createHmac("sha1", secret).update(JSON.stringify(req.body)).digest("hex")}`;
-    console.log(crypto.timingSafeEqual(Buffer.from(req.headers['x-hub-signature']), Buffer.from(computedSignature)));
-
-    const sig = Buffer.from(req.get(sigHeaderName) || '', 'utf8')
-    const hmac = crypto.createHmac(sigHashAlg, secret)
-    const digest = Buffer.from(sigHashAlg + '=' + hmac.update(req.rawBody).digest('hex'), 'utf8')
-    console.log(sig, hmac, digest);
-    if (sig.length !== digest.length || !crypto.timingSafeEqual(digest, sig)) {
+    if (!crypto.timingSafeEqual(Buffer.from(req.headers['x-hub-signature']), Buffer.from(computedSignature))) {
         return next(new Error('Signature verification failed'));
     }
     return next()
@@ -32,7 +21,6 @@ const errorHandling = (err, req, res, next) => {
     };
     let status = 500;
     //Do here error instance checks
-    console.log(err);
 
     if (process.env.NODE_ENV !== 'production') {
         if (error.message.includes('notFound')) {

@@ -28,11 +28,16 @@ if (process.env.https) {
     server = http.createServer(app);
 }
 
+const { errorHandling, notFound, githubSignatureVerifier } = require('./utils/middleware');
 
 // Your Middleware handlers here
 
+app.post('/webhook', githubSignatureVerifier, (req, res, next) => {
 
+});
 
+app.use('*', notFound);
+app.use(errorHandling);
 
 const PORT = process.env.PORT || 3100;
 server.listen(PORT, () => {

@@ -1,14 +1,16 @@
 const crypto = require('crypto')
 
-const sigHeaderName = 'x-hub-signature-256'
+const sigHeaderName = 'x-hub-signature'
 const sigHashAlg = 'sha256'
 
-const secret = process.env.GH_WEBHOOK_SECRET;
+const secret = process.env.GH_WEBHOOK_SECRET || 'Test123';
 
 const githubSignatureVerifier = (req, res, next) => {
+    console.log(req.headers);
     const sig = Buffer.from(req.get(sigHeaderName) || '', 'utf8')
     const hmac = crypto.createHmac(sigHashAlg, secret)
     const digest = Buffer.from(sigHashAlg + '=' + hmac.update(req.rawBody).digest('hex'), 'utf8')
+    console.log(sig, hmac, digest);
     if (sig.length !== digest.length || !crypto.timingSafeEqual(digest, sig)) {
         return next(new Error('Signature verification failed'));
     }

@@ -70,7 +70,7 @@ class Deploy {
 }
 
 class Host {
-    connect() {
+    connect(host, username, password, initPath) {
 
     }
     upload() {

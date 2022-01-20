@@ -33,7 +33,7 @@ const { errorHandling, notFound, githubSignatureVerifier } = require('./utils/mi
 // Your Middleware handlers here
 
 app.post('/webhook', githubSignatureVerifier, (req, res, next) => {
-
+    console.log(req.json());
 });
 
 app.use('*', notFound);

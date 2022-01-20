@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const child_process = require('child_process');
 /**
  * Important:
  *      This is just dream code (how i want this code to look)
@@ -16,6 +17,7 @@ class Deploy {
         this.stepIdx = 0;
         this.dir = null;
         this.currStep = null;
+        this.record = null;
     }
 
     currentStep() {
@@ -25,12 +27,23 @@ class Deploy {
     createDeploy() {
         this.dir = path.join(deploymentsDirectory, `#${this.ID} - Deployment`);
         fs.mkdirSync(this.dir);
+        this.record = {};
+        this.record['0'] = this.dir
     }
     deleteDeploy() {
         fs.rmdirSync(this.dir);
     }
     exec() {
-
+        const process = child_process.spawnSync("ls", ["-la"], { encoding: 'utf8', cwd: this.dir });
+        if (process.error) {
+            console.log("ERROR: ", process.error);
+        }
+        console.log("stdout: ",);
+        if (process.stderr == '' && process.status == 0) {
+            this.record[this.currentStep] = { output: process.stdout.split('\n'), success: true, status: process.status };
+        } else {
+            this.record[this.currentStep] = { output: process.stdout.split('\n'), error: process.stderr.split('\n'), success: false, status: process.status };
+        }
     }
     step(name) {
         if (name) {
@@ -62,6 +75,9 @@ class Host {
 
 const deploy = new Deploy('Test-123', ['Download', 'Test', 'Build', 'Deletion', 'Upload']);
 console.log();
+deploy.createDeploy();
+deploy.exec();
+deploy.deleteDeploy();
 
 // registerDeploy('project-name-html', ['Download', 'Deletion', 'Upload'], (deploy, host) => {
 //     deploy.createDeploy(); // Creates a dir to do the deploy in

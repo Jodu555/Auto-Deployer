@@ -30,6 +30,7 @@ const errorHandling = (err, req, res, next) => {
                 message: 'Route not Found!',
             });
         } else {
+            console.log(err);
             res.status(status).send({
                 success: false,
                 method: req.method,

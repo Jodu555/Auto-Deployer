@@ -32,6 +32,7 @@ const errorHandling = (err, req, res, next) => {
     };
     let status = 500;
     //Do here error instance checks
+    console.log(err);
 
     if (process.env.NODE_ENV !== 'production') {
         if (error.message.includes('notFound')) {

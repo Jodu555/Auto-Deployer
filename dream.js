@@ -58,8 +58,12 @@ class Deploy {
     }
     delete(arg) {
         arg = Array.isArray(arg) ? arg : [arg];
-        arg.forEach(file => {
-            fs.rmSync(path.join(this.dir, file));
+        arg.forEach(node => {
+            if (fs.statSync(node).isDirectory()) {
+                fs.rmdirSync(path.join(this.dir, node));
+            } else {
+                fs.rmSync(path.join(this.dir, node));
+            }
         });
     }
 }
@@ -79,7 +83,7 @@ class Host {
 
 const deploy = new Deploy('Test-123', ['Download', 'Deletion', 'Upload']);
 deploy.createDeploy();
-deploy.exec('git clone https://github.com/Jodu555/Ticket-System.git .');
+deploy.exec('git', ['clone', 'https://github.com/Jodu555/Ticket-System.git', '.']);
 deploy.step();
 deploy.delete('README.md');
 deploy.delete(['.git', '.gitignore']);

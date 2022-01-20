@@ -18,5 +18,12 @@
 	"bugs": {
 		"url": "https://github.com/Jodu555/Auto-Deployer/issues"
 	},
-	"homepage": "https://github.com/Jodu555/Auto-Deployer#readme"
+	"homepage": "https://github.com/Jodu555/Auto-Deployer#readme",
+	"dependencies": {
+		"cors": "^2.8.5",
+		"dotenv": "^14.2.0",
+		"express": "^4.17.2",
+		"helmet": "^5.0.1",
+		"morgan": "^1.10.0"
+	}
 }

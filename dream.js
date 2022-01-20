@@ -36,8 +36,8 @@ class Deploy {
         }
         fs.rmdirSync(this.dir);
     }
-    exec() {
-        const process = child_process.spawnSync("ls", ["-la"], { encoding: 'utf8', cwd: this.dir });
+    exec(command, args = []) {
+        const process = child_process.spawnSync(command, args, { encoding: 'utf8', cwd: this.dir });
         if (process.error) {
             console.log("ERROR: ", process.error);
         }
@@ -76,11 +76,14 @@ class Host {
     }
 }
 
-const deploy = new Deploy('Test-123', ['Download', 'Test', 'Build', 'Deletion', 'Upload']);
-console.log();
+
+const deploy = new Deploy('Test-123', ['Download', 'Deletion', 'Upload']);
 deploy.createDeploy();
-deploy.exec();
-console.log(deploy);
+deploy.exec('git clone https://github.com/Jodu555/Ticket-System.git .');
+deploy.step();
+deploy.delete('README.md');
+deploy.delete(['.git', '.gitignore']);
+deploy.step();
 deploy.deleteDeploy(true);
 
 // registerDeploy('project-name-html', ['Download', 'Deletion', 'Upload'], (deploy, host) => {

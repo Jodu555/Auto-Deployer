@@ -34,7 +34,7 @@ class Deploy {
         if (save) {
             fs.writeFileSync('./' + this.ID + '--output.json', JSON.stringify(this.record, null, 2), 'utf-8');
         }
-        // fs.rmdirSync(this.dir);
+        fs.rmdirSync(this.dir);
     }
     exec(command, args = []) {
         const process = child_process.spawnSync(command, args, { encoding: 'utf8', cwd: this.dir });
@@ -42,11 +42,7 @@ class Deploy {
             console.log("ERROR: ", process.error);
         }
         const output = [...process.stdout.split('\n'), ...process.stderr.split('\n')];
-        if (process.status == 0) {
-            this.record[this.currentStep()] = { output, success: true, status: process.status };
-        } else {
-            this.record[this.currentStep()] = { output, success: false, status: process.status };
-        }
+        appendRecord({ output, success: process.status == 0, status: process.status });
     }
     step(name) {
         if (name) {
@@ -65,6 +61,11 @@ class Deploy {
                 fs.rmSync(path.join(this.dir, node));
             }
         });
+        appendRecord({ deletedFiles: arg })
+    }
+
+    appendRecord(obj) {
+        this.record[this.currentStep()] = { ...this.record[this.currentStep()], ...obj }
     }
 }
 

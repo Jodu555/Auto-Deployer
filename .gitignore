@@ -6,8 +6,8 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 
+# Project Specific
 package-lock.json
-
 deployments
 
 # Diagnostic reports (https://nodejs.org/api/report.html)

@@ -35,6 +35,7 @@ class Deploy {
             fs.writeFileSync('./' + this.ID + '--output.json', JSON.stringify(this.record, null, 2), 'utf-8');
         }
         fs.rmdirSync(this.dir);
+        this.record['-1'] = 'Finished'
     }
     exec(command, args = []) {
         const process = child_process.spawnSync(command, args, { encoding: 'utf8', cwd: this.dir });
@@ -91,7 +92,7 @@ deploy.delete(['.git', '.gitignore']);
 deploy.step();
 deploy.deleteDeploy(true);
 
-// registerDeploy('project-name-html', ['Download', 'Deletion', 'Upload'], (deploy, host) => {
+// registerDeploy('Personal-Website', ['Download', 'Deletion', 'Upload'], (deploy, host) => {
 //     deploy.createDeploy(); // Creates a dir to do the deploy in
 //     deploy.exec('git pull origin master'); // Executes any ssh-deploy command in the dir
 //     deploy.step(); // Steps to the next in this case 'Deletion'

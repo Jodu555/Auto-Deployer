@@ -34,18 +34,18 @@ class Deploy {
         if (save) {
             fs.writeFileSync('./' + this.ID + '--output.json', JSON.stringify(this.record, null, 2), 'utf-8');
         }
-        fs.rmdirSync(this.dir);
+        // fs.rmdirSync(this.dir);
     }
     exec(command, args = []) {
         const process = child_process.spawnSync(command, args, { encoding: 'utf8', cwd: this.dir });
         if (process.error) {
             console.log("ERROR: ", process.error);
         }
-        console.log("stdout: ",);
-        if (process.stderr == '' && process.status == 0) {
-            this.record[this.currentStep()] = { output: process.stdout.split('\n'), success: true, status: process.status };
+        const output = [...process.stdout.split('\n'), ...process.stderr.split('\n')];
+        if (process.status == 0) {
+            this.record[this.currentStep()] = { output, success: true, status: process.status };
         } else {
-            this.record[this.currentStep()] = { output: process.stdout.split('\n'), error: process.stderr.split('\n'), success: false, status: process.status };
+            this.record[this.currentStep()] = { output, success: false, status: process.status };
         }
     }
     step(name) {
@@ -59,8 +59,8 @@ class Deploy {
     delete(arg) {
         arg = Array.isArray(arg) ? arg : [arg];
         arg.forEach(node => {
-            if (fs.statSync(node).isDirectory()) {
-                fs.rmdirSync(path.join(this.dir, node));
+            if (fs.statSync(path.join(this.dir, node)).isDirectory()) {
+                fs.rmdirSync(path.join(this.dir, node), { recursive: true });
             } else {
                 fs.rmSync(path.join(this.dir, node));
             }

@@ -1,0 +1,14 @@
+{
+  "0": "D:\\Allgemein\\Ich\\Hobbys\\Programmieren\\Web Development\\NodeJS\\Auto-Deployer\\deployments\\#Test-123 - Deployment",
+  "Download": {
+    "output": [
+      ""
+    ],
+    "error": [
+      "Cloning into '.'...",
+      ""
+    ],
+    "success": false,
+    "status": 0
+  }
+}

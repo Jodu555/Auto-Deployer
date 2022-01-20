@@ -30,7 +30,10 @@ class Deploy {
         this.record = {};
         this.record['0'] = this.dir
     }
-    deleteDeploy() {
+    deleteDeploy(save) {
+        if (save) {
+            fs.writeFileSync('./' + this.ID + '--output.json', JSON.stringify(this.record, null, 2), 'utf-8');
+        }
         fs.rmdirSync(this.dir);
     }
     exec() {
@@ -40,9 +43,9 @@ class Deploy {
         }
         console.log("stdout: ",);
         if (process.stderr == '' && process.status == 0) {
-            this.record[this.currentStep] = { output: process.stdout.split('\n'), success: true, status: process.status };
+            this.record[this.currentStep()] = { output: process.stdout.split('\n'), success: true, status: process.status };
         } else {
-            this.record[this.currentStep] = { output: process.stdout.split('\n'), error: process.stderr.split('\n'), success: false, status: process.status };
+            this.record[this.currentStep()] = { output: process.stdout.split('\n'), error: process.stderr.split('\n'), success: false, status: process.status };
         }
     }
     step(name) {
@@ -77,7 +80,8 @@ const deploy = new Deploy('Test-123', ['Download', 'Test', 'Build', 'Deletion', 
 console.log();
 deploy.createDeploy();
 deploy.exec();
-deploy.deleteDeploy();
+console.log(deploy);
+deploy.deleteDeploy(true);
 
 // registerDeploy('project-name-html', ['Download', 'Deletion', 'Upload'], (deploy, host) => {
 //     deploy.createDeploy(); // Creates a dir to do the deploy in
@@ -92,7 +96,7 @@ deploy.deleteDeploy();
 //     host.upload(); // This will upload everything left in the dir
 //     host.upload('PATH');// This will upload everything in the path
 //     host.disconnect(); // Cleanes the connection
-//     deploy.deleteDeploy(); // Deletes the dir where the deploy was done
+//     deploy.deleteDeploy(); // Deletes the dir where the deploy was done // A Boolean if should save or not
 // });
 
 function registerDeploy(name, steps, cb) {

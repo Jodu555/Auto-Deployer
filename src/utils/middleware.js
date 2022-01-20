@@ -9,7 +9,7 @@ const githubSignatureVerifier = (req, res, next) => {
     console.log(req.headers);
 
     const computedSignature = `sha1=${crypto.createHmac("sha1", secret).update(JSON.stringify(req.body)).digest("hex")}`;
-    console.log(crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(computedSignature)));
+    console.log(crypto.timingSafeEqual(Buffer.from(req.headers['x-hub-signature']), Buffer.from(computedSignature)));
 
     const sig = Buffer.from(req.get(sigHeaderName) || '', 'utf8')
     const hmac = crypto.createHmac(sigHashAlg, secret)

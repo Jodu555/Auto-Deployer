@@ -70,7 +70,6 @@ class Deploy {
         });
         this.appendRecord({ deletedFiles: arg })
     }
-
     appendRecord(obj) {
         this.record[this.currentStep()] = merge(this.getCurrentRecord(), obj);
     }
@@ -86,11 +85,14 @@ class Host {
         this.ssh = new NodeSSH();
     }
     async connect(host, username, password, initPath) {
-        await this.ssh.connect({
-            host: host,
-            username: username,
-            password: password,
-        });
+        const config = {};
+        if (host.host) {
+            config = host
+            initPath = username;
+        } else {
+            config = { host, username, password }
+        }
+        await this.ssh.connect(config);
         this.cwd = initPath;
     }
     async upload(uploadPath = null) {
@@ -133,7 +135,7 @@ class Config {
         } else {
             this.data = {
                 servers: [
-                    { name: 'ExampleServer', alias: 'example', ip: '1.1.1.1', username: 'example', password: 'SuperSecretPassword' }
+                    { name: 'ExampleServer', alias: 'example', host: '1.1.1.1', username: 'example', password: 'SuperSecretPassword' }
                 ],
             };
         }

@@ -1,11 +1,11 @@
 {
-    "servers": [
-        {
-            "name": "ExampleServer",
-            "alias": "example",
-            "ip": "1.1.1.1",
-            "username": "example",
-            "password": "SuperSecretPassword"
-        }
-    ]
+	"servers": [
+		{
+			"name": "ExampleServer",
+			"alias": "example",
+			"host": "1.1.1.1",
+			"username": "example",
+			"password": "SuperSecretPassword"
+		}
+	]
 }

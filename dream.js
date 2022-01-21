@@ -68,7 +68,10 @@ class Deploy {
     }
 
     appendRecord(obj) {
-        this.record[this.currentStep()] = { ...this.record[this.currentStep()], ...obj }
+        this.getCurrentRecord() = { ...this.getCurrentRecord(), ...obj }
+    }
+    getCurrentRecord() {
+        return this.record[this.currentStep()];
     }
 }
 
@@ -76,10 +79,10 @@ class Host {
     constructor(deploy) {
         this.deploy = deploy;
         this.cwd = '';
+        this.ssh = new NodeSSH();
     }
     async connect(host, username, password, initPath) {
-        const ssh = new NodeSSH()
-        await ssh.connect({
+        await this.ssh.connect({
             host: host,
             username: username,
             password: password,
@@ -87,7 +90,26 @@ class Host {
         this.cwd = initPath;
     }
     async upload() {
+        const failed = []
+        const succeeded = []
         console.log(this.deploy.dir);
+        const status = await this.ssh.putDirectory(this.deploy.dir, this.cwd, {
+            recursive: true,
+            concurrency: 10,
+            // ^ WARNING: Not all servers support high concurrency
+            // try a bunch of values and see what works on your server
+            tick: (localPath, remotePath, error) => {
+                const arr = this.deploy.getCurrentRecord()?.upload?.part || [];
+                arr.push({ localPath, remotePath, error });
+                this.deploy.appendRecord({ upload: { part: [...arr] } });
+                if (error) {
+                    failed.push(localPath)
+                } else {
+                    succeeded.push(localPath)
+                }
+            }
+        });
+        this.deploy.appendRecord({ upload: { status, failed, succeeded } });
     }
     //Important: This method executes an ssh command direct on your Host Machine
     async exec() {

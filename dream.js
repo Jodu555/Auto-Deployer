@@ -22,7 +22,6 @@ class Deploy {
         this.currStep = null;
         this.record = null;
     }
-
     currentStep() {
         return this.currStep ? this.currStep : this.steps[this.stepIdx];
     }
@@ -119,6 +118,35 @@ class Host {
     }
     disconnect() {
         this.ssh.dispose();
+    }
+}
+
+class Config {
+    constructor(path = null) {
+        path = path || path.join(process.cwd(), 'config.json');
+        this.load();
+        this.data = {};
+    }
+    load() {
+        this.dataJSON.parse(fs.readFileSync(path, 'utf-8'));
+        this.save();
+    }
+    get(search) {
+        let server = null;
+        this.data.servers.forEach(server => {
+            if (server.name.toLowerCase() == search.toLowerCase())
+                server = server;
+        });
+        if (!server)
+            server = this.data.servers[Number(search)];
+
+        if (!server)
+            throw new Error('There is no Server with name or index: ' + search)
+
+        return server;
+    }
+    save() {
+
     }
 }
 

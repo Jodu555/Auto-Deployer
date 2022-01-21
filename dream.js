@@ -26,7 +26,6 @@ class Deploy {
     currentStep() {
         return this.currStep ? this.currStep : this.steps[this.stepIdx];
     }
-
     createDeploy() {
         this.dir = path.join(deploymentsDirectory, `#${this.ID} - Deployment`);
         fs.mkdirSync(this.dir);

@@ -35,3 +35,5 @@ An Selfmade Deployment system for some self education
     * [ ] Log every deployment
     * [ ] Display Deployments in an ui
 * [ ] Implement multiple deploy hosts
+* [ ] Implement a config file 
+    * [ ] Store the server connections there

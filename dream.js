@@ -124,8 +124,8 @@ class Host {
 class Config {
     constructor(cfgPath = null) {
         this.cfgPath = this.cfgPath || path.join(process.cwd(), 'config.json');
-        this.load();
         this.data = {};
+        this.load();
     }
     load() {
         if (fs.existsSync(this.cfgPath)) {
@@ -144,11 +144,11 @@ class Config {
     }
     get(search) {
         let server = null;
-        this.data.servers.forEach(server => {
-            if (server.name.toLowerCase() == search.toLowerCase())
-                server = server;
-            if (server.alias?.toLowerCase() == search.toLowerCase())
-                server = server;
+        this.data.servers.forEach(entry => {
+            if (entry.name.toLowerCase() == search.toLowerCase())
+                server = entry;
+            if (entry.alias?.toLowerCase() == search.toLowerCase())
+                server = entry;
         });
         if (!server)
             server = this.data.servers[Number(search)];
@@ -175,10 +175,12 @@ registerDeploy('Personal-Website', ['Download', 'Deletion', 'Upload'], async (de
     await host.upload();
     host.disconnect();
 
-    deploy.deleteDeploy(true);
+    deploy.deleteDeploy();
 });
 
 const config = new Config();
+
+console.log(config.get('example'));
 
 function registerDeploy(name, steps, cb) {
     console.log(name, steps);

@@ -118,7 +118,7 @@ class Host {
 
     }
     disconnect() {
-
+        this.ssh.dispose();
     }
 }
 
@@ -134,6 +134,7 @@ async function test(params) {
 
     await host.connect(process.env.TEST_IP, process.env.TEST_USR, process.env.TEST_PW, '/home/Test');
     await host.upload();
+    host.disconnect();
 
     deploy.deleteDeploy(true);
 
@@ -158,6 +159,6 @@ test();
 // });
 
 function registerDeploy(name, steps, cb) {
-    // console.log(name, steps, cb(new Deploy(name, steps), new Host()));
+    console.log(name, steps, cb(new Deploy(name, steps), new Host()));
 }
 

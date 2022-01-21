@@ -71,10 +71,14 @@ class Deploy {
 }
 
 class Host {
-    connect(host, username, password, initPath) {
+    async connect(host, username, password, initPath) {
 
     }
-    upload() {
+    async upload() {
+
+    }
+    //Important: This method executes an ssh command direct on your Host Machine
+    async exec() {
 
     }
     disconnect() {
@@ -83,16 +87,16 @@ class Host {
 }
 
 
-const deploy = new Deploy('Test-123', ['Download', 'Deletion', 'Upload']);
-deploy.createDeploy();
-deploy.exec('git', ['clone', 'https://github.com/Jodu555/Ticket-System.git', '.']);
-deploy.step();
-deploy.delete('README.md');
-deploy.delete(['.git', '.gitignore']);
-deploy.step();
-deploy.deleteDeploy(true);
+// const deploy = new Deploy('Test-123', ['Download', 'Deletion', 'Upload']);
+// deploy.createDeploy();
+// deploy.exec('git', ['clone', 'https://github.com/Jodu555/Ticket-System.git', '.']);
+// deploy.step();
+// deploy.delete('README.md');
+// deploy.delete(['.git', '.gitignore']);
+// deploy.step();
+// deploy.deleteDeploy(true);
 
-// registerDeploy('Personal-Website', ['Download', 'Deletion', 'Upload'], (deploy, host) => {
+// registerDeploy('Personal-Website', ['Download', 'Deletion', 'Upload'], async (deploy, host) => {
 //     deploy.createDeploy(); // Creates a dir to do the deploy in
 //     deploy.exec('git pull origin master'); // Executes any ssh-deploy command in the dir
 //     deploy.step(); // Steps to the next in this case 'Deletion'
@@ -101,14 +105,14 @@ deploy.deleteDeploy(true);
 //     deploy.step('Build'); // Steps to Building
 //     deploy.exec('npm run build')
 //     deploy.step(); //Steps to Upload
-//     host.connect('IP-DEPLOY-SERVER', 'username', 'password', 'PATH-TO-DIR'); // Connects to the deploy host and decides the path to upload in this case: /var/ww/html/proj
-//     host.upload(); // This will upload everything left in the dir
-//     host.upload('PATH');// This will upload everything in the path
+//     await host.connect('IP-DEPLOY-SERVER', 'username', 'password', 'PATH-TO-DIR'); // Connects to the deploy host and decides the path to upload in this case: /var/ww/html/proj
+//     await host.upload(); // This will upload everything left in the dir
+//     await host.upload('PATH');// This will upload everything in the path
 //     host.disconnect(); // Cleanes the connection
 //     deploy.deleteDeploy(); // Deletes the dir where the deploy was done // A Boolean if should save or not
 // });
 
 function registerDeploy(name, steps, cb) {
-    console.log(name, steps, cb(new Deploy(name, steps), new Host()));
+    // console.log(name, steps, cb(new Deploy(name, steps), new Host()));
 }
 

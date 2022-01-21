@@ -131,13 +131,11 @@ class Config {
         if (fs.existsSync(this.cfgPath)) {
             this.data = JSON.parse(fs.readFileSync(this.cfgPath, 'utf-8'));
         } else {
-            if (Object.keys(this.data).length == 0) {
-                this.data = {
-                    servers: [
-                        { name: 'ExampleServer', alias: 'example', ip: '1.1.1.1', username: 'example', password: 'SuperSecretPassword' }
-                    ],
-                };
-            }
+            this.data = {
+                servers: [
+                    { name: 'ExampleServer', alias: 'example', ip: '1.1.1.1', username: 'example', password: 'SuperSecretPassword' }
+                ],
+            };
         }
         this.save();
     }
@@ -161,7 +159,7 @@ class Config {
         return server;
     }
     save() {
-        fs.writeFileSync(this.cfgPath, JSON.parse(this.data, null, 4), 'utf-8');
+        fs.writeFileSync(this.cfgPath, JSON.stringify(this.data, null, 4), 'utf-8');
     }
 }
 
@@ -180,10 +178,12 @@ registerDeploy('Personal-Website', ['Download', 'Deletion', 'Upload'], async (de
     deploy.deleteDeploy(true);
 });
 
+const config = new Config();
+
 function registerDeploy(name, steps, cb) {
-    // console.log(name, steps, );
+    console.log(name, steps);
     const GH_DATA = {};
-    cb(new Deploy(name, steps), new Host(), GH_DATA, new Config());
+    // cb(new Deploy(name, steps), new Host(), GH_DATA, config);
 
 }
 

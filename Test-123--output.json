@@ -14,5 +14,19 @@
       ".git",
       ".gitignore"
     ]
+  },
+  "Upload": {
+    "upload": {
+      "status": true,
+      "failed": [],
+      "succeeded": [
+        "D:\\Allgemein\\Ich\\Hobbys\\Programmieren\\Web Development\\NodeJS\\Auto-Deployer\\deployments\\#Test-123 - Deployment\\FetureList.md",
+        "D:\\Allgemein\\Ich\\Hobbys\\Programmieren\\Web Development\\NodeJS\\Auto-Deployer\\deployments\\#Test-123 - Deployment\\Server\\package.json",
+        "D:\\Allgemein\\Ich\\Hobbys\\Programmieren\\Web Development\\NodeJS\\Auto-Deployer\\deployments\\#Test-123 - Deployment\\Server\\src\\index.js",
+        "D:\\Allgemein\\Ich\\Hobbys\\Programmieren\\Web Development\\NodeJS\\Auto-Deployer\\deployments\\#Test-123 - Deployment\\tests\\Frontend\\list.html",
+        "D:\\Allgemein\\Ich\\Hobbys\\Programmieren\\Web Development\\NodeJS\\Auto-Deployer\\deployments\\#Test-123 - Deployment\\tests\\Frontend\\ticket.html",
+        "D:\\Allgemein\\Ich\\Hobbys\\Programmieren\\Web Development\\NodeJS\\Auto-Deployer\\deployments\\#Test-123 - Deployment\\Server\\package-lock.json"
+      ]
+    }
   }
 }

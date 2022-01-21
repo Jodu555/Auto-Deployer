@@ -33,11 +33,12 @@ class Deploy {
         this.record['0'] = this.dir
     }
     deleteDeploy(save) {
+        this.record['-1'] = 'Finished'
         if (save) {
             fs.writeFileSync('./' + this.ID + '--output.json', JSON.stringify(this.record, null, 2), 'utf-8');
         }
         // fs.rmdirSync(this.dir, { recursive: true });
-        this.record['-1'] = 'Finished'
+
     }
     exec(command, args = []) {
         const process = child_process.spawnSync(command, args, { encoding: 'utf8', cwd: this.dir });
@@ -68,7 +69,7 @@ class Deploy {
     }
 
     appendRecord(obj) {
-        this.getCurrentRecord() = { ...this.getCurrentRecord(), ...obj }
+        this.record[this.currentStep()] = { ...this.getCurrentRecord(), ...obj }
     }
     getCurrentRecord() {
         return this.record[this.currentStep()];
@@ -92,15 +93,14 @@ class Host {
     async upload() {
         const failed = []
         const succeeded = []
-        console.log(this.deploy.dir);
-        const status = await this.ssh.putDirectory(this.deploy.dir, this.cwd, {
+        const success = await this.ssh.putDirectory(this.deploy.dir, this.cwd, {
             recursive: true,
             concurrency: 10,
-            // ^ WARNING: Not all servers support high concurrency
-            // try a bunch of values and see what works on your server
             tick: (localPath, remotePath, error) => {
                 const arr = this.deploy.getCurrentRecord()?.upload?.part || [];
+                console.log(1, arr);
                 arr.push({ localPath, remotePath, error });
+                console.log(2, arr);
                 this.deploy.appendRecord({ upload: { part: [...arr] } });
                 if (error) {
                     failed.push(localPath)
@@ -109,7 +109,7 @@ class Host {
                 }
             }
         });
-        this.deploy.appendRecord({ upload: { status, failed, succeeded } });
+        this.deploy.appendRecord({ upload: { success, failed, succeeded } });
     }
     //Important: This method executes an ssh command direct on your Host Machine
     async exec() {

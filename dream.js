@@ -41,6 +41,11 @@ class Deploy {
         fs.rmdirSync(this.dir, { recursive: true });
     }
     exec(command, args = []) {
+        if (args.length == 0) {
+            const arr = command.split(' ');
+            command = arr.shift();
+            args = arr;
+        }
         const process = child_process.spawnSync(command, args, { encoding: 'utf8', cwd: this.dir });
         if (process.error) {
             console.log("ERROR: ", process.error);
@@ -122,7 +127,7 @@ async function test(params) {
     const deploy = new Deploy('Test-123', ['Download', 'Deletion', 'Upload']);
     const host = new Host(deploy);
     deploy.createDeploy();
-    deploy.exec('git', ['clone', 'https://github.com/Jodu555/Ticket-System.git', '.']);
+    deploy.exec('git clone https://github.com/Jodu555/Ticket-System.git .');
     deploy.step();
     deploy.delete('README.md');
     deploy.delete(['.git', '.gitignore']);
@@ -130,8 +135,6 @@ async function test(params) {
 
     await host.connect(process.env.TEST_IP, process.env.TEST_USR, process.env.TEST_PW, '/home/Test');
     await host.upload();
-    // await host.upload('PATH');
-
 
     deploy.deleteDeploy(true);
 

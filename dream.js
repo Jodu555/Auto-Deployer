@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const child_process = require('child_process');
+const { NodeSSH } = require('node-ssh')
 /**
  * Important:
  *      This is just dream code (how i want this code to look)
@@ -72,7 +73,13 @@ class Deploy {
 
 class Host {
     async connect(host, username, password, initPath) {
-
+        const ssh = new NodeSSH()
+        await ssh.connect({
+            host: host,
+            username: username,
+            password: password,
+        });
+        this.cwd = initPath;
     }
     async upload() {
 

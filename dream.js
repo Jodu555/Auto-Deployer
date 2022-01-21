@@ -122,9 +122,7 @@ class Host {
     }
 }
 
-async function test(params) {
-    const deploy = new Deploy('Test-123', ['Download', 'Deletion', 'Upload']);
-    const host = new Host(deploy);
+registerDeploy('Personal-Website', ['Download', 'Deletion', 'Upload'], async (deploy, host, data, config) => {
     deploy.createDeploy();
     deploy.exec('git clone https://github.com/Jodu555/Ticket-System.git .');
     deploy.step();
@@ -132,33 +130,17 @@ async function test(params) {
     deploy.delete(['.git', '.gitignore']);
     deploy.step();
 
-    await host.connect(process.env.TEST_IP, process.env.TEST_USR, process.env.TEST_PW, '/home/Test');
+    await host.connect(config.get('ci'), '/home/Test');
     await host.upload();
     host.disconnect();
 
     deploy.deleteDeploy(true);
-
-}
-
-test();
-
-// registerDeploy('Personal-Website', ['Download', 'Deletion', 'Upload'], async (deploy, host) => {
-//     deploy.createDeploy(); // Creates a dir to do the deploy in
-//     deploy.exec('git pull origin master'); // Executes any ssh-deploy command in the dir
-//     deploy.step(); // Steps to the next in this case 'Deletion'
-//     deploy.delete('README.md'); // Deletes on file in the dir
-//     deploy.delete(['.git', '.gitignore']); // Deletes an array of files in the dir
-//     deploy.step('Build'); // Steps to Building
-//     deploy.exec('npm run build')
-//     deploy.step(); //Steps to Upload
-//     await host.connect('IP-DEPLOY-SERVER', 'username', 'password', 'PATH-TO-DIR'); // Connects to the deploy host and decides the path to upload in this case: /var/ww/html/proj
-//     await host.upload(); // This will upload everything left in the dir
-//     await host.upload('PATH');// This will upload everything in the sub path of the deploy dir
-//     host.disconnect(); // Cleanes the connection
-//     deploy.deleteDeploy(); // Deletes the dir where the deploy was done // A Boolean if should save or not
-// });
+});
 
 function registerDeploy(name, steps, cb) {
-    console.log(name, steps, cb(new Deploy(name, steps), new Host()));
+    // console.log(name, steps, );
+    const GH_DATA = {};
+    cb(new Deploy(name, steps), new Host(), GH_DATA, new Config());
+
 }
 

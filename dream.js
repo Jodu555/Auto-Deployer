@@ -1,7 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 const child_process = require('child_process');
-const { NodeSSH } = require('node-ssh')
+const { NodeSSH } = require('node-ssh');
+const merge = require('deepmerge');
 const dotenv = require('dotenv').config();
 /**
  * Important:
@@ -37,8 +38,7 @@ class Deploy {
         if (save) {
             fs.writeFileSync('./' + this.ID + '--output.json', JSON.stringify(this.record, null, 2), 'utf-8');
         }
-        // fs.rmdirSync(this.dir, { recursive: true });
-
+        fs.rmdirSync(this.dir, { recursive: true });
     }
     exec(command, args = []) {
         const process = child_process.spawnSync(command, args, { encoding: 'utf8', cwd: this.dir });
@@ -69,7 +69,7 @@ class Deploy {
     }
 
     appendRecord(obj) {
-        this.record[this.currentStep()] = { ...this.getCurrentRecord(), ...obj }
+        this.record[this.currentStep()] = merge(this.getCurrentRecord(), obj);
     }
     getCurrentRecord() {
         return this.record[this.currentStep()];
@@ -98,10 +98,8 @@ class Host {
             concurrency: 10,
             tick: (localPath, remotePath, error) => {
                 const arr = this.deploy.getCurrentRecord()?.upload?.part || [];
-                console.log(1, arr);
                 arr.push({ localPath, remotePath, error });
-                console.log(2, arr);
-                this.deploy.appendRecord({ upload: { part: [...arr] } });
+                this.deploy.appendRecord({ upload: { part: arr } });
                 if (error) {
                     failed.push(localPath)
                 } else {

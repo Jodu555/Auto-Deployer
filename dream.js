@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const child_process = require('child_process');
 const { NodeSSH } = require('node-ssh')
+const dotenv = require('dotenv').config();
 /**
  * Important:
  *      This is just dream code (how i want this code to look)
@@ -35,7 +36,7 @@ class Deploy {
         if (save) {
             fs.writeFileSync('./' + this.ID + '--output.json', JSON.stringify(this.record, null, 2), 'utf-8');
         }
-        fs.rmdirSync(this.dir);
+        // fs.rmdirSync(this.dir, { recursive: true });
         this.record['-1'] = 'Finished'
     }
     exec(command, args = []) {
@@ -44,7 +45,7 @@ class Deploy {
             console.log("ERROR: ", process.error);
         }
         const output = [...process.stdout.split('\n'), ...process.stderr.split('\n')];
-        appendRecord({ output, success: process.status == 0, status: process.status });
+        this.appendRecord({ output, success: process.status == 0, status: process.status });
     }
     step(name) {
         if (name) {
@@ -63,7 +64,7 @@ class Deploy {
                 fs.rmSync(path.join(this.dir, node));
             }
         });
-        appendRecord({ deletedFiles: arg })
+        this.appendRecord({ deletedFiles: arg })
     }
 
     appendRecord(obj) {
@@ -86,7 +87,7 @@ class Host {
         this.cwd = initPath;
     }
     async upload() {
-
+        console.log(this.deploy.dir);
     }
     //Important: This method executes an ssh command direct on your Host Machine
     async exec() {
@@ -97,15 +98,26 @@ class Host {
     }
 }
 
+async function test(params) {
+    const deploy = new Deploy('Test-123', ['Download', 'Deletion', 'Upload']);
+    const host = new Host(deploy);
+    deploy.createDeploy();
+    deploy.exec('git', ['clone', 'https://github.com/Jodu555/Ticket-System.git', '.']);
+    deploy.step();
+    deploy.delete('README.md');
+    deploy.delete(['.git', '.gitignore']);
+    deploy.step();
 
-// const deploy = new Deploy('Test-123', ['Download', 'Deletion', 'Upload']);
-// deploy.createDeploy();
-// deploy.exec('git', ['clone', 'https://github.com/Jodu555/Ticket-System.git', '.']);
-// deploy.step();
-// deploy.delete('README.md');
-// deploy.delete(['.git', '.gitignore']);
-// deploy.step();
-// deploy.deleteDeploy(true);
+    await host.connect(process.env.TEST_IP, process.env.TEST_USR, process.env.TEST_PW, '/home/Test');
+    await host.upload();
+    // await host.upload('PATH');
+
+
+    deploy.deleteDeploy(true);
+
+}
+
+test();
 
 // registerDeploy('Personal-Website', ['Download', 'Deletion', 'Upload'], async (deploy, host) => {
 //     deploy.createDeploy(); // Creates a dir to do the deploy in

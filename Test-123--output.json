@@ -8,5 +8,11 @@
     ],
     "success": true,
     "status": 0
+  },
+  "Deletion": {
+    "deletedFiles": [
+      ".git",
+      ".gitignore"
+    ]
   }
 }

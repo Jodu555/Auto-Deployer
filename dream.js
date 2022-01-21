@@ -122,19 +122,34 @@ class Host {
 }
 
 class Config {
-    constructor(path = null) {
-        path = path || path.join(process.cwd(), 'config.json');
+    constructor(cfgPath = null) {
+        this.cfgPath = this.cfgPath || path.join(process.cwd(), 'config.json');
         this.load();
         this.data = {};
     }
     load() {
-        this.dataJSON.parse(fs.readFileSync(path, 'utf-8'));
+        if (fs.existsSync(this.cfgPath)) {
+            this.data = JSON.parse(fs.readFileSync(this.cfgPath, 'utf-8'));
+        } else {
+            if (Object.keys(this.data).length == 0) {
+                this.data = {
+                    servers: [
+                        { name: 'ExampleServer', alias: 'example', ip: '1.1.1.1', username: 'example', password: 'SuperSecretPassword' }
+                    ],
+                };
+            }
+        }
         this.save();
+    }
+    set(server) {
+        this.data.servers.push(server);
     }
     get(search) {
         let server = null;
         this.data.servers.forEach(server => {
             if (server.name.toLowerCase() == search.toLowerCase())
+                server = server;
+            if (server.alias?.toLowerCase() == search.toLowerCase())
                 server = server;
         });
         if (!server)
@@ -146,7 +161,7 @@ class Config {
         return server;
     }
     save() {
-
+        fs.writeFileSync(this.cfgPath, JSON.parse(this.data, null, 4), 'utf-8');
     }
 }
 

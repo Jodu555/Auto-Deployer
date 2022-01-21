@@ -72,6 +72,10 @@ class Deploy {
 }
 
 class Host {
+    constructor(deploy) {
+        this.deploy = deploy;
+        this.cwd = '';
+    }
     async connect(host, username, password, initPath) {
         const ssh = new NodeSSH()
         await ssh.connect({
@@ -114,7 +118,7 @@ class Host {
 //     deploy.step(); //Steps to Upload
 //     await host.connect('IP-DEPLOY-SERVER', 'username', 'password', 'PATH-TO-DIR'); // Connects to the deploy host and decides the path to upload in this case: /var/ww/html/proj
 //     await host.upload(); // This will upload everything left in the dir
-//     await host.upload('PATH');// This will upload everything in the path
+//     await host.upload('PATH');// This will upload everything in the sub path of the deploy dir
 //     host.disconnect(); // Cleanes the connection
 //     deploy.deleteDeploy(); // Deletes the dir where the deploy was done // A Boolean if should save or not
 // });

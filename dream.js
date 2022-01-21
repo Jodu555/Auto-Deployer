@@ -90,10 +90,10 @@ class Host {
         });
         this.cwd = initPath;
     }
-    async upload() {
+    async upload(uploadPath = null) {
         const failed = []
         const succeeded = []
-        const success = await this.ssh.putDirectory(this.deploy.dir, this.cwd, {
+        const success = await this.ssh.putDirectory(this.deploy.dir, uploadPath ? path.join(this.cwd, uploadPath) : this.cwd, {
             recursive: true,
             concurrency: 10,
             tick: (localPath, remotePath, error) => {

@@ -17,7 +17,7 @@
   },
   "Upload": {
     "upload": {
-      "status": true,
+      "success": true,
       "failed": [],
       "succeeded": [
         "D:\\Allgemein\\Ich\\Hobbys\\Programmieren\\Web Development\\NodeJS\\Auto-Deployer\\deployments\\#Test-123 - Deployment\\FetureList.md",
@@ -28,5 +28,6 @@
         "D:\\Allgemein\\Ich\\Hobbys\\Programmieren\\Web Development\\NodeJS\\Auto-Deployer\\deployments\\#Test-123 - Deployment\\Server\\package-lock.json"
       ]
     }
-  }
+  },
+  "-1": "Finished"
 }

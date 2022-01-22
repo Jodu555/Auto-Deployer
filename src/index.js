@@ -41,6 +41,12 @@ app.post('/webhook', githubSignatureVerifier, (req, res, next) => {
 
     console.log(name, id, full_name, url, description, pusher, commit_id, message, timestamp, author, added, removed, modified);
 
+    const data = {
+        repository: { name, id, full_name, url, description },
+        commit: { commit_id, message, timestamp, author, added, removed, modified },
+        pusher
+    }
+
 });
 
 app.use('*', notFound);

@@ -166,7 +166,7 @@ class Config {
 
 registerDeploy('Personal-Website', ['Download', 'Deletion', 'Upload'], async (deploy, host, data, config) => {
     deploy.createDeploy();
-    deploy.exec('git clone https://github.com/Jodu555/Ticket-System.git .');
+    deploy.exec(`git clone ${data.repository.url} .`);
     deploy.step();
     deploy.delete('README.md');
     deploy.delete(['.git', '.gitignore']);

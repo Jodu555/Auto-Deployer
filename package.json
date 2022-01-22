@@ -20,6 +20,7 @@
 	},
 	"homepage": "https://github.com/Jodu555/Auto-Deployer#readme",
 	"dependencies": {
+		"@jodu555/commandmanager": "^1.2.0",
 		"cors": "^2.8.5",
 		"deepmerge": "^4.2.2",
 		"dotenv": "^14.2.0",

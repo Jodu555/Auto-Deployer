@@ -114,9 +114,8 @@ class Host {
         });
         this.deploy.appendRecord({ upload: { success, failed, succeeded } });
     }
-    //Important: This method executes an ssh command direct on your Host Machine
     async exec() {
-
+        //Important: This method executes an ssh command direct on your Host Machine
     }
     disconnect() {
         this.ssh.dispose();

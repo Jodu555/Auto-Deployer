@@ -4,14 +4,8 @@ const child_process = require('child_process');
 const { NodeSSH } = require('node-ssh');
 const merge = require('deepmerge');
 const dotenv = require('dotenv').config();
-/**
- * Important:
- *      This is just dream code (how i want this code to look)
- *      This code dont works its just an Convention
- *      Of what i would like this to be
- */
+
 const deploymentsDirectory = path.join(process.cwd(), 'deployments');
-console.log(deploymentsDirectory);
 
 class Deploy {
     constructor(ID, steps) {

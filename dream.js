@@ -164,6 +164,7 @@ class Config {
     }
 }
 
+
 registerDeploy('Personal-Website', ['Download', 'Deletion', 'Upload'], async (deploy, host, data, config) => {
     deploy.createDeploy();
     deploy.exec(`git clone ${data.repository.url} .`);

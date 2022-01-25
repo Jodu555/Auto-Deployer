@@ -6,6 +6,7 @@ const merge = require('deepmerge');
 const dotenv = require('dotenv').config();
 
 const deploymentsDirectory = path.join(process.cwd(), 'deployments');
+const historyDirectory = path.join(process.cwd(), 'history');
 
 class Deploy {
     constructor(ID, steps) {
@@ -23,10 +24,10 @@ class Deploy {
         this.dir = path.join(deploymentsDirectory, `#${this.ID} - Deployment`);
         fs.mkdirSync(this.dir);
         this.record = {};
-        this.record['0'] = this.dir
+        this.record['0'] = { time: Date.now(), dir: this.dir };
     }
     deleteDeploy(save) {
-        this.record['-1'] = 'Finished'
+        this.record['-1'] = { time: Date.now(), saved: save };
         if (save) {
             fs.writeFileSync('./' + this.ID + '--output.json', JSON.stringify(this.record, null, 2), 'utf-8');
         }

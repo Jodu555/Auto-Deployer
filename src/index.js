@@ -6,6 +6,10 @@ const morgan = require('morgan');
 const helmet = require('helmet');
 const dotenv = require('dotenv').config();
 
+const fs = require('fs');
+fs.mkdirSync('deployments');
+fs.mkdirSync('history');
+
 const { CommandManager, Command } = require('@jodu555/commandmanager');
 const commandManager = CommandManager.createCommandManager(process.stdin, process.stdout);
 

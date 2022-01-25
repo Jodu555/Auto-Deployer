@@ -28,7 +28,8 @@ class Deploy {
     }
     deleteDeploy(save) {
         const time = Date.now();
-        this.record['-1'] = { time, saved: save };
+        const timeDifference = time - this.record['0'].time;
+        this.record['-1'] = { time, saved: save, timeDifference };
         if (save) {
             const historyFile = path.join(historyDirectory, `${this.ID}--${time}--output.json`)
             fs.writeFileSync(historyFile, JSON.stringify(this.record, null, 2), 'utf-8');

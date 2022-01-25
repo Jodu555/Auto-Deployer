@@ -27,9 +27,11 @@ class Deploy {
         this.record['0'] = { time: Date.now(), dir: this.dir };
     }
     deleteDeploy(save) {
-        this.record['-1'] = { time: Date.now(), saved: save };
+        const time = Date.now();
+        this.record['-1'] = { time, saved: save };
         if (save) {
-            fs.writeFileSync('./' + this.ID + '--output.json', JSON.stringify(this.record, null, 2), 'utf-8');
+            const historyFile = path.join(historyDirectory, `${this.ID}--${time}--output.json`)
+            fs.writeFileSync(historyFile, JSON.stringify(this.record, null, 2), 'utf-8');
         }
         fs.rmdirSync(this.dir, { recursive: true });
     }

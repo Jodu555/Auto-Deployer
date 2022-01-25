@@ -53,6 +53,12 @@ host.disconnect(); // Cleanes the connection
 deploy.deleteDeploy(); // Deletes the dir where the deploy was done // A Boolean if should save or not
 ```
 
+## Command Ideas
+
+- trigger : Triggers a deployment process
+- list : lists all registered deployment processes
+- history : lists a history of all the already deployed processes
+
 ### Stretch
 
 - [ ] Implement a database

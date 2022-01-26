@@ -119,7 +119,7 @@ class Host {
         this.ssh.dispose();
     }
 }
-const Config = require('./src/classes/config');
+const Config = require('./src/classes/Config');
 
 registerDeploy('Personal-Website', ['Download', 'Deletion', 'Upload'], async (deploy, host, data, config) => {
     deploy.createDeploy();

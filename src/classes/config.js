@@ -1,3 +1,6 @@
+const fs = require('fs');
+const path = require('path');
+
 class Config {
     constructor(cfgPath = null) {
         this.cfgPath = this.cfgPath || path.join(process.cwd(), 'config.json');

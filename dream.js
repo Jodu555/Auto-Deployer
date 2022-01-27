@@ -3,7 +3,7 @@ const { NodeSSH } = require('node-ssh');
 const dotenv = require('dotenv').config();
 
 const Deploy = require('./src/classes/Deploy');
-
+const Config = require('./src/classes/Config');
 class Host {
     constructor(deploy) {
         this.deploy = deploy;
@@ -47,7 +47,6 @@ class Host {
         this.ssh.dispose();
     }
 }
-const Config = require('./src/classes/Config');
 
 registerDeploy('Personal-Website', ['Download', 'Deletion', 'Upload'], async (deploy, host, data, config) => {
     deploy.createDeploy();

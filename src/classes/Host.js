@@ -1,3 +1,6 @@
+const path = require('path');
+const { NodeSSH } = require('node-ssh');
+
 class Host {
     constructor(deploy) {
         this.deploy = deploy;
@@ -41,3 +44,5 @@ class Host {
         this.ssh.dispose();
     }
 }
+
+module.exports = Host;

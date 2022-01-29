@@ -67,3 +67,4 @@ deploy.deleteDeploy(); // Deletes the dir where the deploy was done // A Boolean
 - [ ] Implement multiple deploy hosts
 - [ ] Implement a config file
   - [ ] Store the server connections there
+- [ ] Implement a native Website renderer so it renders a file default on the slash route

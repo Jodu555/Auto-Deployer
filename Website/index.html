@@ -16,6 +16,19 @@
 				font-weight: 400;
 				color: #333333;
 			}
+
+			.footer {
+				position: absolute;
+				background-color: #f8f9fa;
+				height: 3.5rem;
+				bottom: 0;
+				width: 100%;
+				margin-bottom: 0;
+			}
+
+			.footer-text {
+				padding-top: 1rem;
+			}
 		</style>
 		<title>ci.jodu555.de</title>
 	</head>
@@ -49,7 +62,7 @@
 				</div>
 			</div>
 		</nav>
-		<main class="container">
+		<main class="container" style="padding-bottom: 3.5rem">
 			<section style="padding-top: 10vh">
 				<h1 class="text-center" style="font-size: 5.3vw">ci.jodu555.de</h1>
 				<div class="row" style="padding-top: 13vh">
@@ -69,6 +82,17 @@
 				</div>
 			</section>
 		</main>
+		<footer class="footer">
+			<p class="text-center text-muted footer-text">
+				© Copyright
+				<script>
+					document.write(new Date().getFullYear());
+				</script>
+				by <a href="https://Jodu555.de">Jodu555</a> /
+				<a href="https://jodu555.de/imprint">Impressum</a> /
+				<a href="https://jodu555.de/privacy">Privacy Policy</a>
+			</p>
+		</footer>
 
 		<script
 			src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"

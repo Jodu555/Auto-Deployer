@@ -6,6 +6,9 @@ const morgan = require('morgan');
 const helmet = require('helmet');
 const dotenv = require('dotenv').config();
 
+const { CommandManager, Command } = require('@jodu555/commandmanager');
+const commandManager = CommandManager.createCommandManager(process.stdin, process.stdout);
+
 const fs = require('fs');
 if (!fs.existsSync('deployments'))
     fs.mkdirSync('deployments');
@@ -31,9 +34,6 @@ registerDeploy('Personal-Website', ['Download', 'Deletion', 'Upload'], async (de
 });
 
 callDeploy('Personal-Website', {});
-
-const { CommandManager, Command } = require('@jodu555/commandmanager');
-const commandManager = CommandManager.createCommandManager(process.stdin, process.stdout);
 
 commandManager.registerCommand(new Command('trigger', 'trigger [name]', 'Triggers a Deployment without the github Hook', (command, [...args], scope) => {
     const name = args[1];

@@ -24,7 +24,7 @@ class Deploy {
         this.record = {};
         this.record['0'] = { time: Date.now(), dir: this.dir };
     }
-    deleteDeploy(save) {
+    deleteDeploy(save = true) {
         const time = Date.now();
         const timeDifference = time - this.record['0'].time;
         this.record['-1'] = { time, saved: save, timeDifference };
@@ -32,7 +32,7 @@ class Deploy {
             const historyFile = path.join(historyDirectory, `${this.ID}--${time}--output.json`)
             fs.writeFileSync(historyFile, JSON.stringify(this.record, null, 2), 'utf-8');
         }
-        fs.rmdirSync(this.dir, { recursive: true });
+        fs.rmSync(this.dir, { recursive: true });
     }
     exec(command, args = []) {
         if (args.length == 0) {
@@ -59,7 +59,7 @@ class Deploy {
         arg = Array.isArray(arg) ? arg : [arg];
         arg.forEach(node => {
             if (fs.statSync(path.join(this.dir, node)).isDirectory()) {
-                fs.rmdirSync(path.join(this.dir, node), { recursive: true });
+                fs.rmSync(path.join(this.dir, node), { recursive: true });
             } else {
                 fs.rmSync(path.join(this.dir, node));
             }

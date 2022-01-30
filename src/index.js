@@ -15,6 +15,14 @@ if (!fs.existsSync('history'))
 const { CommandManager, Command } = require('@jodu555/commandmanager');
 const commandManager = CommandManager.createCommandManager(process.stdin, process.stdout);
 
+commandManager.registerCommand(new Command('trigger', 'trigger [name]', 'Triggers a Deployment without the github Hook', (command, [...args], scope) => {
+    const name = args[1];
+    if (!name) return 'Please Provide the name!'
+
+    //Do your code here
+    return ['Triggered Deploy: ', name, 'Name: NAME'];
+}));
+
 // const { Database } = require('@jodu555/mysqlapi');
 // const database = Database.createDatabase('localhost', 'root', '', 'rt-chat');
 // database.connect();

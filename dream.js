@@ -1,5 +1,4 @@
-const Deploy = require('./src/classes/Deploy');
-const Config = require('./src/classes/Config');
+
 
 
 registerDeploy('Personal-Website', ['Download', 'Deletion', 'Upload'], async (deploy, host, data, config) => {

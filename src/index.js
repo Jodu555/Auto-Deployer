@@ -12,7 +12,7 @@ if (!fs.existsSync('deployments'))
 if (!fs.existsSync('history'))
     fs.mkdirSync('history');
 
-const { setupConfig, registerDeploy } = require('./utils/utils');
+const { setupConfig, registerDeploy, callDeploy } = require('./utils/utils');
 setupConfig();
 
 registerDeploy('Personal-Website', ['Download', 'Deletion', 'Upload'], async (deploy, host, data, config) => {
@@ -29,6 +29,8 @@ registerDeploy('Personal-Website', ['Download', 'Deletion', 'Upload'], async (de
 
     deploy.deleteDeploy();
 });
+
+callDeploy('Personal-Website', {});
 
 const { CommandManager, Command } = require('@jodu555/commandmanager');
 const commandManager = CommandManager.createCommandManager(process.stdin, process.stdout);

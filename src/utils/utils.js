@@ -15,8 +15,9 @@ const registerDeploy = (name, steps, cb) => {
 
 const callDeploy = (name, GH_DATA) => {
     const { steps, cb } = getDeploy(name);
-
-    cb(new Deploy(name, steps), new Host(), GH_DATA, config);
+    const deploy = new Deploy(name, steps)
+    const host = new Host(deploy);
+    cb(deploy, host, GH_DATA, config);
 }
 
 const getDeploy = (name) => deploys.get(name);

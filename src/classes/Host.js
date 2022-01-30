@@ -8,7 +8,7 @@ class Host {
         this.ssh = new NodeSSH();
     }
     async connect(host, username, password, initPath) {
-        const config = {};
+        let config = {};
         if (host.host) {
             config = host
             initPath = username;

@@ -1,6 +1,6 @@
-const Config = require('./src/classes/Config');
-const Deploy = require('./src/classes/Deploy');
-const Host = require('./src/classes/Host');
+const Config = require('../classes/Config');
+const Deploy = require('../classes/Deploy');
+const Host = require('../classes/Host');
 const deploys = new Map();
 let config = null;
 
@@ -28,5 +28,6 @@ module.exports = {
     getConfig,
     registerDeploy,
     getDeploy,
-    getDeploys
+    getDeploys,
+    callDeploy,
 }

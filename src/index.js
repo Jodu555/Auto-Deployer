@@ -12,6 +12,24 @@ if (!fs.existsSync('deployments'))
 if (!fs.existsSync('history'))
     fs.mkdirSync('history');
 
+const { setupConfig, registerDeploy } = require('./utils/utils');
+setupConfig();
+
+registerDeploy('Personal-Website', ['Download', 'Deletion', 'Upload'], async (deploy, host, data, config) => {
+    deploy.createDeploy();
+    deploy.exec(`git clone https://github.com/Jodu555/Personal-Website .`);
+    deploy.step();
+    deploy.delete('README.md');
+    deploy.delete(['.git', '.gitignore']);
+    deploy.step();
+
+    await host.connect(config.get('dsh'), '/home/TEST-DEPLOY');
+    await host.upload();
+    host.disconnect();
+
+    deploy.deleteDeploy();
+});
+
 const { CommandManager, Command } = require('@jodu555/commandmanager');
 const commandManager = CommandManager.createCommandManager(process.stdin, process.stdout);
 

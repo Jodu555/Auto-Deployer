@@ -37,7 +37,7 @@ registerDeploy('Personal-Website', ['Download', 'Deletion', 'Upload'], async (de
     console.log(4);
 });
 
-callDeploy('Personal-Website', {});
+// callDeploy('Personal-Website', {});
 
 commandManager.registerCommand(new Command('trigger', 'trigger [name]', 'Triggers a Deployment without the github Hook', (command, [...args], scope) => {
     const name = args[1];

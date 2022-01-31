@@ -13,11 +13,11 @@ const registerDeploy = (name, steps, cb) => {
     deploys.set(name, { steps, cb });
 }
 
-const callDeploy = (name, GH_DATA) => {
+const callDeploy = async (name, GH_DATA) => {
     const { steps, cb } = getDeploy(name);
     const deploy = new Deploy(name, steps)
     const host = new Host(deploy);
-    cb(deploy, host, GH_DATA, config);
+    await cb(deploy, host, GH_DATA, config);
 }
 
 const getDeploy = (name) => deploys.get(name);

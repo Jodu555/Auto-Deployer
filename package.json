@@ -4,7 +4,7 @@
 	"description": "An Selfmade Deployment system for some self education",
 	"main": "index.js",
 	"scripts": {
-		"start": "node src/index.js",
+		"start": "node --max-old-space-size=9192 src/index.js",
 		"test": "node dream.js",
 		"dev": "nodemon src/index.js"
 	},

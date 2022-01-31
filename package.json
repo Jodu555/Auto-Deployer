@@ -4,9 +4,9 @@
 	"description": "An Selfmade Deployment system for some self education",
 	"main": "index.js",
 	"scripts": {
-		"start": "node --max-old-space-size=9192 src/index.js",
+		"start": "node --max-old-space-size=15192 src/index.js",
 		"test": "node dream.js",
-		"dev": "nodemon src/index.js --ignore *.json --ignore deployments --ignore history"
+		"dev": "nodemon --max-old-space-size=15192 src/index.js --ignore *.json --ignore deployments --ignore history"
 	},
 	"repository": {
 		"type": "git",

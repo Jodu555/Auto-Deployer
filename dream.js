@@ -12,7 +12,7 @@ registerDeploy('Personal-Website', ['Download', 'Deletion', 'Upload'], async (de
     deploy.delete(['.git', '.gitignore']);
     deploy.step();
 
-    await host.connect(config.get('ci'), '/home/Test');
+    await host.connect(config.get('rooti'), '/home/DEPL/TEST');
     await host.upload();
     host.disconnect();
 

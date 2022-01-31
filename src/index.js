@@ -43,8 +43,8 @@ commandManager.registerCommand(new Command('trigger', 'trigger [name]', 'Trigger
     const name = args[1];
     if (!name) return 'Please Provide the name!'
 
-    //Do your code here
-    return ['Triggered Deploy: ', name, 'Name: NAME'];
+    callDeploy(name, { scope: 'USER' });
+    return ['Triggered Deploy: ', name,];
 }));
 
 // const { Database } = require('@jodu555/mysqlapi');

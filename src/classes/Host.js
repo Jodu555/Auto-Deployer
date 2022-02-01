@@ -20,27 +20,32 @@ class Host {
         this.cwd = initPath;
     }
     async upload(uploadPath = null) {
-        console.log('Upload: START');
-        const failed = []
-        const succeeded = []
-        const success = await this.ssh.putDirectory(this.deploy.dir, uploadPath ? path.join(this.cwd, uploadPath) : this.cwd, {
-            recursive: true,
-            concurrency: 10,
-            tick: (localPath, remotePath, error) => {
-                console.log('TICK', localPath, remotePath, error);
-                const arr = this.deploy.getCurrentRecord()?.upload?.part || [];
-                arr.push({ localPath, remotePath, error });
-                this.deploy.appendRecord({ upload: { part: arr } });
-                if (error) {
-                    failed.push(localPath)
-                } else {
-                    succeeded.push(localPath)
-                }
+        const files = this.listFiles(this.deploy.dir, uploadPath || '/home/DEPLOY');
+
+        const failed = [];
+        const succeeded = [];
+        for (const entity of files) {
+            await ssh.putFiles([{ local: entity.lc, remote: entity.rm }]).then(() => {
+                succeeded.push(entity)
+            }, (error) => {
+                failed.push({ ...entity, error });
+            });
+        }
+        this.deploy.appendRecord({ success: failed.length > 0, failed, succeeded });
+    }
+
+    listFiles(lcPath, rmPath) {
+        const files = [];
+        fs.readdirSync(lcPath).map(e => { return { name: e, path: path.join(lcPath, e) } }).forEach(entity => {
+            if (fs.statSync(entity.path).isDirectory()) {
+                files.push(...this.listFiles(path.join(entity.path), path.join(rmPath, entity.name)));
+            } else {
+                files.push({ lc: entity.path, rm: path.join(rmPath, entity.name) });
             }
         });
-        console.log('Successs', { upload: { success, failed, succeeded } });
-        this.deploy.appendRecord({ upload: { success, failed, succeeded } });
+        return files;
     }
+
     async exec() {
         //Important: This method executes an ssh command direct on your Host Machine
     }

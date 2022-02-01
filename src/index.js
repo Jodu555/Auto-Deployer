@@ -20,21 +20,17 @@ setupConfig();
 
 registerDeploy('Personal-Website', ['Download', 'Deletion', 'Upload'], async (deploy, host, data, config) => {
     deploy.createDeploy();
-    console.log(1);
     deploy.exec(`git clone https://github.com/Jodu555/Personal-Website .`);
     deploy.step();
     deploy.delete('README.md');
     deploy.delete(['.git', '.gitignore']);
     deploy.step();
 
-    console.log(2);
     await host.connect(config.get('dsh'), '/home/TEST-DEPLOY');
     await host.upload();
     host.disconnect();
-    console.log(3);
 
     deploy.deleteDeploy();
-    console.log(4);
 });
 
 // callDeploy('Personal-Website', {});

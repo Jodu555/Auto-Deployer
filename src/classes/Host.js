@@ -1,3 +1,4 @@
+const fs = require('fs');
 const path = require('path');
 const { NodeSSH } = require('node-ssh');
 
@@ -25,13 +26,13 @@ class Host {
         const failed = [];
         const succeeded = [];
         for (const entity of files) {
-            await ssh.putFiles([{ local: entity.lc, remote: entity.rm }]).then(() => {
+            await this.ssh.putFiles([{ local: entity.lc, remote: entity.rm }]).then(() => {
                 succeeded.push(entity)
             }, (error) => {
                 failed.push({ ...entity, error });
             });
         }
-        this.deploy.appendRecord({ success: failed.length > 0, failed, succeeded });
+        this.deploy.appendRecord({ success: failed.length == 0, failed, succeeded });
     }
     listFiles(lcPath, rmPath) {
         const files = [];

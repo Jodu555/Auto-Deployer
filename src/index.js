@@ -33,20 +33,13 @@ registerDeploy('Personal-Website', ['Download', 'Deletion', 'Upload'], async (de
     deploy.deleteDeploy();
 });
 
-// callDeploy('Personal-Website', {});
-
-commandManager.registerCommand(new Command('trigger', 'trigger [name]', 'Triggers a Deployment without the github Hook', (command, [...args], scope) => {
+commandManager.registerCommand(new Command('trigger', 'trigger [name]', 'Triggers a Deployment without the github Hook', async (command, [...args], scope) => {
     const name = args[1];
-    if (!name) return 'Please Provide the name!'
-
-    callDeploy(name, { scope: 'USER' });
-    return ['Triggered Deploy: ', name,];
+    if (!name) return 'Please Provide the name!';
+    console.log('Triggered Deployment: ' + name);
+    await callDeploy(name, { scope: 'USER' });
+    return 'Deployment Finished';
 }));
-
-// const { Database } = require('@jodu555/mysqlapi');
-// const database = Database.createDatabase('localhost', 'root', '', 'rt-chat');
-// database.connect();
-// require('./utils/database')();
 
 const app = express();
 app.use(cors());

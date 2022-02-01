@@ -16,7 +16,6 @@ class Host {
         } else {
             config = { host, username, password }
         }
-        console.log(config);
         await this.ssh.connect(config);
         this.cwd = initPath;
     }

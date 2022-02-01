@@ -6,8 +6,9 @@ const morgan = require('morgan');
 const helmet = require('helmet');
 const dotenv = require('dotenv').config();
 
-const { CommandManager, Command } = require('@jodu555/commandmanager');
-const commandManager = CommandManager.createCommandManager(process.stdin, process.stdout);
+const { CommandManager } = require('@jodu555/commandmanager');
+CommandManager.createCommandManager(process.stdin, process.stdout);
+require('./utils/commands');
 
 const fs = require('fs');
 if (!fs.existsSync('deployments'))
@@ -15,7 +16,7 @@ if (!fs.existsSync('deployments'))
 if (!fs.existsSync('history'))
     fs.mkdirSync('history');
 
-const { setupConfig, registerDeploy, callDeploy } = require('./utils/utils');
+const { setupConfig, registerDeploy } = require('./utils/utils');
 setupConfig();
 
 registerDeploy('Personal-Website', ['Download', 'Deletion', 'Upload'], async (deploy, host, data, config) => {
@@ -23,7 +24,7 @@ registerDeploy('Personal-Website', ['Download', 'Deletion', 'Upload'], async (de
     deploy.exec(`git clone https://github.com/Jodu555/Personal-Website .`);
     deploy.step();
     deploy.delete('README.md');
-    deploy.delete(['.git', '.gitignore']);
+    deploy.delete(['.git', '.gitignore', '.vscode']);
     deploy.step();
 
     await host.connect(config.get('dsh'), '/home/TEST-DEPLOY');
@@ -32,14 +33,6 @@ registerDeploy('Personal-Website', ['Download', 'Deletion', 'Upload'], async (de
 
     deploy.deleteDeploy();
 });
-
-commandManager.registerCommand(new Command('trigger', 'trigger [name]', 'Triggers a Deployment without the github Hook', async (command, [...args], scope) => {
-    const name = args[1];
-    if (!name) return 'Please Provide the name!';
-    console.log('Triggered Deployment: ' + name);
-    await callDeploy(name, { scope: 'USER' });
-    return 'Deployment Finished';
-}));
 
 const app = express();
 app.use(cors());

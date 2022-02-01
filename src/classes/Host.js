@@ -33,7 +33,6 @@ class Host {
         }
         this.deploy.appendRecord({ success: failed.length > 0, failed, succeeded });
     }
-
     listFiles(lcPath, rmPath) {
         const files = [];
         fs.readdirSync(lcPath).map(e => { return { name: e, path: path.join(lcPath, e) } }).forEach(entity => {
@@ -45,7 +44,6 @@ class Host {
         });
         return files;
     }
-
     async exec() {
         //Important: This method executes an ssh command direct on your Host Machine
     }

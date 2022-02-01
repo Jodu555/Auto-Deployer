@@ -28,19 +28,10 @@ async function test(files) {
     await ssh.connect({
         host: 'ci.jodu555.de',
         username: 'root',
-        password: 'xxxx'
+        password: 'xx'
     });
 
     const uploadProcesses = [];
-
-    // files.forEach(entity => {
-    //     uploadProcesses.push(ssh.putFiles([{ local: entity.lc, remote: entity.rm }]).then(function () {
-    //         console.log(entity, "The File thing is done")
-    //     }, function (error) {
-    //         console.log(entity, "Something's wrong")
-    //         console.log(error)
-    //     }));
-    // });
     for (const entity of files) {
         await ssh.putFiles([{ local: entity.lc, remote: entity.rm }]).then(function () {
             console.log(entity, "The File thing is done")
@@ -50,26 +41,4 @@ async function test(files) {
         });
     }
     console.log('Finish');
-
-    return;
-
-    const failed = [];
-    const successful = [];
-    ssh.putDirectory(p, '/home/TEST', {
-        recursive: true,
-        concurrency: 10,
-        // ^ WARNING: Not all servers support high concurrency
-        tick: (localPath, remotePath, error) => {
-            console.log(1337, localPath, error);
-            if (error) {
-                failed.push(localPath);
-            } else {
-                successful.push(localPath);
-            }
-        }
-    }).then((status) => {
-        console.log('the directory transfer was', status ? 'successful' : 'unsuccessful');
-        console.log('failed transfers', failed.join(', '));
-        console.log('successful transfers', successful.join(', '));
-    })
 }

@@ -55,9 +55,10 @@ deploy.deleteDeploy(); // Deletes the dir where the deploy was done // A Boolean
 
 ## Command Ideas
 
-- trigger : Triggers a deployment process
-- list : lists all registered deployment processes
-- history : lists a history of all the already deployed processes
+- trigger / t : Triggers a deployment process
+- list / ls : lists all registered deployment processes
+- history / h : lists a history of all the already deployed processes
+- info / i : Shows Informations about one specified deployment process
 
 ### Stretch
 

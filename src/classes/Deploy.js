@@ -20,6 +20,7 @@ class Deploy {
     }
     createDeploy() {
         this.dir = path.join(deploymentsDirectory, `#${this.ID} - Deployment`);
+        if (fs.existsSync(this.dir)) fs.rmSync(this.dir, { recursive: true });
         fs.mkdirSync(this.dir);
         this.record = {};
         this.record['0'] = { time: Date.now(), dir: this.dir };

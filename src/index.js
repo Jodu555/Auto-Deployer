@@ -27,7 +27,7 @@ registerDeploy('Personal-Website', ['Download', 'Deletion', 'Upload'], async (de
     deploy.delete(['.git', '.gitignore', '.vscode']);
     deploy.step();
 
-    await host.connect(config.get('dsh'), '/home/TEST-DEPLOY');
+    await host.connect(config.get('ci'), '/var/www/JODU');
     await host.upload();
     host.disconnect();
 

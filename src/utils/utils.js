@@ -21,6 +21,7 @@ const callDeploy = async (name, GH_DATA) => {
 }
 
 const getDeploy = (name) => deploys.get(name);
+const hasDeploy = (name) => deploys.has(name);
 const getConfig = () => config;
 const getDeploys = () => deploys;
 
@@ -29,6 +30,7 @@ module.exports = {
     getConfig,
     registerDeploy,
     getDeploy,
+    hasDeploy,
     getDeploys,
     callDeploy,
 }

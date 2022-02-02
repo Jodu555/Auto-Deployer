@@ -1,7 +1,7 @@
 const { CommandManager, Command } = require('@jodu555/commandmanager');
 const commandManager = CommandManager.getCommandManager();
 
-const { callDeploy, hasDeploy } = require('./utils');
+const { callDeploy, hasDeploy, getDeploys } = require('./utils');
 
 commandManager.registerCommand(new Command(['trigger', 't'], 'trigger [name]', 'Triggers a Deployment without the github Hook', async (command, [...args], scope) => {
     const name = args[1];
@@ -10,4 +10,8 @@ commandManager.registerCommand(new Command(['trigger', 't'], 'trigger [name]', '
     console.log('Triggered Deployment: ' + name);
     await callDeploy(name, { scope: 'USER' });
     return 'Deployment Finished';
+}));
+
+commandManager.registerCommand(new Command(['list', 'ls'], 'list', 'Lists all registered deployment Processes', (command, [...args], scope) => {
+    return ['Registered Deployment-Processes: ', ...[...getDeploys().keys()].map(name => '  - ' + name), ' '];
 }));

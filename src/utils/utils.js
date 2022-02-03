@@ -9,8 +9,8 @@ const setupConfig = () => {
     return config = new Config();
 };
 
-const registerDeploy = (name, steps, cb) => {
-    deploys.set(name, { steps, cb });
+const registerDeploy = (name, settings, cb) => {
+    deploys.set(name, { ...settings, cb });
 }
 
 const callDeploy = async (name, GH_DATA) => {

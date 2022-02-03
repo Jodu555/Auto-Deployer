@@ -1,7 +1,7 @@
 const Config = require('../classes/Config');
 const Deploy = require('../classes/Deploy');
 const Host = require('../classes/Host');
-const deploys = new Map();
+const deploys = [];
 let config = null;
 
 
@@ -10,18 +10,19 @@ const setupConfig = () => {
 };
 
 const registerDeploy = (name, settings, cb) => {
-    deploys.set(name, { ...settings, cb });
+    deploys.push({ ...settings, name, cb });
 }
 
 const callDeploy = async (name, GH_DATA) => {
-    const { steps, cb } = getDeploy(name);
+    const { steps, cb } = getDeployByName(name);
     const deploy = new Deploy(name, steps)
     const host = new Host(deploy);
-    await cb(deploy, host, GH_DATA, config);
+    console.log('Technical deployment call!');
+    // await cb(deploy, host, GH_DATA, config);
 }
 
-const getDeploy = (name) => deploys.get(name);
-const hasDeploy = (name) => deploys.has(name);
+const getDeployByName = (name) => deploys.find(e => e.name.toLowerCase() === name.toLowerCase());
+const hasDeployByName = (name) => Boolean(deploys.find(e => e.name.toLowerCase() === name.toLowerCase()));
 const getConfig = () => config;
 const getDeploys = () => deploys;
 
@@ -29,8 +30,8 @@ module.exports = {
     setupConfig,
     getConfig,
     registerDeploy,
-    getDeploy,
-    hasDeploy,
+    getDeployByName,
+    hasDeployByName,
     getDeploys,
     callDeploy,
 }

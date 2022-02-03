@@ -13,5 +13,5 @@ commandManager.registerCommand(new Command(['trigger', 't'], 'trigger [name]', '
 }));
 
 commandManager.registerCommand(new Command(['list', 'ls'], 'list', 'Lists all registered deployment Processes', (command, [...args], scope) => {
-    return ['Registered Deployment-Processes: ', ...[...getDeploys().keys()].map(name => '  - ' + name), ' '];
+    return ['Registered Deployment-Processes: ', ...getDeploys().map(e => '  - ' + e.name), ' '];
 }));

@@ -20,7 +20,9 @@ const { setupConfig, registerDeploy } = require('./utils/utils');
 setupConfig();
 
 registerDeploy('Personal-Website', {
-    steps: ['Download', 'Deletion', 'Upload']
+    steps: ['Download', 'Deletion', 'Upload'],
+    gh_repo_URL: 'https://github.com/Jodu555/Personal-Website',
+    gh_repo_wh_SECRET: 'TEST123'
 },
     async (deploy, host, data, config) => {
         deploy.createDeploy();

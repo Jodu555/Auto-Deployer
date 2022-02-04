@@ -1,3 +1,4 @@
+const { callDeployByRepoURL, hasDeployByRepoUrl } = require('../utils/utils');
 
 const webhook = (req, res, next) => {
     console.log(req.body);
@@ -13,6 +14,10 @@ const webhook = (req, res, next) => {
         commit: { commit_id, message, timestamp, author, added, removed, modified },
         pusher
     }
+
+    if (hasDeployByRepoUrl(data.repository.url))
+        callDeployByRepoURL(data.repository.url, data);
+
 };
 
 module.exports = {

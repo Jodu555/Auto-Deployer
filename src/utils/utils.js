@@ -46,5 +46,6 @@ module.exports = {
     getDeploys,
     callDeployByName,
     getDeployByRepoUrl,
-    hasDeployByRepoUrl
+    hasDeployByRepoUrl,
+    callDeployByRepoURL
 }

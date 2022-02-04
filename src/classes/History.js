@@ -6,10 +6,14 @@ class History {
     constructor() {
         this.files = fs.readdirSync(historyDirectory);
         this.histories = this.files.map(e => {
-            return {
+            const info = {
                 name: e.split('--')[0],
-                time: e.split('--')[1]
-            }
+                time: e.split('--')[1],
+                contents: JSON.parse(fs.readFileSync(path.join(historyDirectory, e))),
+            };
+
+            info.taken = info.contents['-1'].timeDifference;
+            return info;
         });
         console.log(this);
     }

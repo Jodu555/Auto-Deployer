@@ -15,3 +15,12 @@ commandManager.registerCommand(new Command(['trigger', 't'], 'trigger [name]', '
 commandManager.registerCommand(new Command(['list', 'ls'], 'list', 'Lists all registered deployment Processes', (command, [...args], scope) => {
     return ['Registered Deployment-Processes: ', ...getDeploys().map(e => '  - ' + e.name), ' '];
 }));
+
+commandManager.registerCommand(new Command(['history', 'h'], 'history', 'Shows a history of all deploys', (command, [...args], scope) => {
+    const fs = require('fs');
+    const path = require('path');
+    const historyDirectory = path.join(process.cwd(), 'history');
+    const hist = fs.readdirSync(historyDirectory);
+    console.log(hist);
+    return '';
+}));

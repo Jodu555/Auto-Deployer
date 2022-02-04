@@ -1,4 +1,4 @@
-const { registerDeploy } = require('./utils/utils');
+const { registerDeploy } = require('./utils');
 
 registerDeploy('Personal-Website', {
     steps: ['Download', 'Deletion', 'Upload'],

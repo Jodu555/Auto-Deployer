@@ -2,8 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const child_process = require('child_process');
 const merge = require('deepmerge');
-
-const { getConfig } = require('../utils/utils');
+const Webhook = require('./Webhook');
 
 const deploymentsDirectory = path.join(process.cwd(), 'deployments');
 const historyDirectory = path.join(process.cwd(), 'history');
@@ -19,7 +18,10 @@ class Deploy {
         this.record = null;
     }
     notify() {
-        console.log(getConfig());
+        const hooks = require('../utils/utils').getConfig().data.webhooks.map(e => new Webhook(e));
+        hooks.forEach(hook => {
+            hook.call(`Deployment Finished: ${this.ID} in ${this.record['-1'].timeDifference} milliseconds`);
+        });
     }
     currentStep() {
         return this.currStep ? this.currStep : this.steps[this.stepIdx];

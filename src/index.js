@@ -21,10 +21,6 @@ setupConfig();
 
 require('./utils/deploys');
 
-const Webhook = require('./classes/Webhook');
-
-const wh = new Webhook({ name: 'LOL', type: 'discord', url: '' })
-
 
 const app = express();
 app.use(cors());

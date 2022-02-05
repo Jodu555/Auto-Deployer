@@ -2,11 +2,11 @@ const Config = require('../classes/Config');
 const Deploy = require('../classes/Deploy');
 const Host = require('../classes/Host');
 const deploys = [];
-let config = null;
+let config = {};
 
 
 const setupConfig = () => {
-    return config = new Config();
+    config = new Config();
 };
 
 const registerDeploy = (name, settings, cb) => {
@@ -49,5 +49,6 @@ module.exports = {
     callDeployByName,
     getDeployByRepoUrl,
     hasDeployByRepoUrl,
-    callDeployByRepoURL
+    callDeployByRepoURL,
+    getConfig
 }

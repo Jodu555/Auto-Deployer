@@ -14,7 +14,7 @@ registerDeploy('Personal-Website', {
         deploy.delete(['.git', '.gitignore', '.vscode']);
         deploy.step();
 
-        await host.connect(config.get('root'), '/var/www/html/main');
+        await host.connect(config.get('dsh'), '/home/DEPLOY');
         await host.upload();
         host.disconnect();
 

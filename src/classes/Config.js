@@ -15,6 +15,9 @@ class Config {
                 servers: [
                     { name: 'ExampleServer', alias: 'example', host: '1.1.1.1', username: 'example', password: 'SuperSecretPassword' }
                 ],
+                webhooks: [
+                    { name: 'exampleWH', type: 'discord', url: 'https://discord.com/api/webhooks/EXAMPLETOKEN/EXAMPLEID' }
+                ],
             };
         }
         this.save();
@@ -35,6 +38,20 @@ class Config {
 
         if (!server)
             throw new Error('There is no Server with name or index: ' + search)
+
+        return server;
+    }
+    getWebhook(search) {
+        let webhook = null;
+        this.data.webhooks.forEach(entry => {
+            if (entry.name.toLowerCase() == search.toLowerCase())
+                webhook = entry;
+        });
+        if (!webhook)
+            webhook = this.data.webhooks[Number(search)];
+
+        if (!webhook)
+            throw new Error('There is no WebHook with name or index: ' + search)
 
         return server;
     }

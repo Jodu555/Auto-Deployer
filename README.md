@@ -68,4 +68,5 @@ deploy.deleteDeploy(); // Deletes the dir where the deploy was done // A Boolean
 - [x] Implement multiple deploy hosts
 - [x] Implement a config file
   - [x] Store the server connections there
+- [ ] Discord Webhook Integration
 - [ ] Implement a native Website renderer so it renders a file default on the slash route

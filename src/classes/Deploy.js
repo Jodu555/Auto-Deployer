@@ -3,17 +3,23 @@ const path = require('path');
 const child_process = require('child_process');
 const merge = require('deepmerge');
 
+const { getConfig } = require('../utils/utils');
+
 const deploymentsDirectory = path.join(process.cwd(), 'deployments');
 const historyDirectory = path.join(process.cwd(), 'history');
 
 class Deploy {
-    constructor(ID, steps) {
+    constructor(ID, { steps, webhooks }) {
         this.ID = ID;
         this.steps = steps;
+        this.webhooks = webhooks;
         this.stepIdx = 0;
         this.dir = null;
         this.currStep = null;
         this.record = null;
+    }
+    notify() {
+        console.log(getConfig());
     }
     currentStep() {
         return this.currStep ? this.currStep : this.steps[this.stepIdx];
@@ -33,6 +39,7 @@ class Deploy {
             const historyFile = path.join(historyDirectory, `${this.ID}--${time}--output.json`)
             fs.writeFileSync(historyFile, JSON.stringify(this.record, null, 2), 'utf-8');
         }
+        this.notify();
         fs.rmSync(this.dir, { recursive: true });
     }
     exec(command, args = []) {

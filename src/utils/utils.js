@@ -15,9 +15,11 @@ const registerDeploy = (name, settings, cb) => {
 
 const callDeepDeploy = async (data, GH_DATA) => {
     const { name, steps, cb } = data;
-    const deploy = new Deploy(name, steps)
+    const deploy = new Deploy(name, data)
     const host = new Host(deploy);
     console.log('Technical deployment call!');
+    deploy.createDeploy();
+    deploy.deleteDeploy(false);
     // await cb(deploy, host, GH_DATA, config);
 }
 

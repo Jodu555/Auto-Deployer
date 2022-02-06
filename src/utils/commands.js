@@ -15,7 +15,7 @@ commandManager.registerCommand(new Command(['trigger', 't'], 'trigger [name]', '
 
 commandManager.registerCommand(new Command(['list', 'ls'], 'list', 'Lists all registered deployment Processes', (command, [...args], scope) => {
     return ['Registered Deployment-Processes: ', ...getDeploys().map(e => {
-        return `  - ${e.name} ${e.gh_repo_URL ? '\n   Linked to ' + e.gh_repo_URL : ''}`;
+        return `  - ${e.name} ${e.gh_repo_URL ? '\n      Linked to ' + e.gh_repo_URL : ''} ${e.webhooks.length != 0 ? '\n      Webhooks: ' + e.webhooks.join(', ') : ''}`;
     }), ' '];
 }));
 

@@ -17,10 +17,14 @@ class Deploy {
         this.currStep = null;
         this.record = null;
     }
-    notify() {
-        const hooks = require('../utils/utils').getConfig().data.webhooks.map(e => new Webhook(e));
+    notify(message = null) {
+        const confHooks = require('../utils/utils').getConfig().data.webhooks;
+        const hooks = this.webhooks.map(e => new Webhook(confHooks.find(x => x.name)));
+        if (message == null) {
+            message = `Deployment Finished: ${this.ID} in ${this.record['-1'].timeDifference} milliseconds`;
+        }
         hooks.forEach(hook => {
-            hook.call(`Deployment Finished: ${this.ID} in ${this.record['-1'].timeDifference} milliseconds`);
+            hook.call(message);
         });
     }
     currentStep() {

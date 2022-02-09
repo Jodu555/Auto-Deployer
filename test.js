@@ -19,9 +19,9 @@ async function executeCommand(command, cwd) {
 }
 
 async function run() {
-    const out = await executeCommand('npm i', dir);
+    const out =
 
-    console.log(`out: `, out);
+        console.log(`out: `, out.split('\n'));
 
 }
 

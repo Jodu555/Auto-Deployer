@@ -1,4 +1,5 @@
-const { registerDeploy } = require('./utils');
+const { registerDeploy } = require('../utils/utils');
+
 
 registerDeploy('Personal-Website', {
     steps: ['Download', 'Deletion', 'Upload'],
@@ -8,13 +9,13 @@ registerDeploy('Personal-Website', {
 },
     async (deploy, host, data, config) => {
         deploy.createDeploy();
-        deploy.exec(`git clone https://github.com/Jodu555/Personal-Website .`);
+        deploy.exec(`git clone ${data.repository.url} .`);
         deploy.step();
         deploy.delete('README.md');
         deploy.delete(['.git', '.gitignore', '.vscode']);
         deploy.step();
 
-        await host.connect(config.get('dsh'), '/home/DEPLOY');
+        await host.connect(config.get('rooti'), '/var/www/html/root');
         await host.upload();
         host.disconnect();
 

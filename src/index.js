@@ -19,7 +19,7 @@ if (!fs.existsSync('history'))
 const { setupConfig } = require('./utils/utils');
 setupConfig();
 
-require('./utils/deploys');
+require('./deploys/index');
 
 
 const app = express();

@@ -9,7 +9,7 @@ registerDeploy('Personal-Website', {
 },
     async (deploy, host, data, config) => {
         deploy.createDeploy();
-        deploy.exec(`git clone ${data.repository.url} .`);
+        await deploy.exec(`git clone ${data.repository.url} .`);
         deploy.step();
         deploy.delete('README.md');
         deploy.delete(['.git', '.gitignore', '.vscode']);
@@ -30,7 +30,7 @@ registerDeploy('EZ-Uploader', {
 },
     async (deploy, host, data, config) => {
         deploy.createDeploy();
-        deploy.exec(`git clone ${data.repository.url} .`);
+        await deploy.exec(`git clone ${data.repository.url} .`);
         deploy.step();
         deploy.delete('README.md');
         deploy.delete(['.git', '.gitignore']);
@@ -43,7 +43,7 @@ registerDeploy('EZ-Uploader', {
         deploy.step();
         deploy.delete('Website');
         deploy.step();
-        deploy.exec(`npm i`);
+        await deploy.exec(`npm i`);
         deploy.step();
         await host.connect(config.get('dsh'), '/home/DEPLOY-PROGRAM');
         await host.upload();

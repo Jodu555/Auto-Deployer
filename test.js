@@ -8,9 +8,11 @@ async function executeCommand(command, cwd) {
     return await new Promise((resolve, reject) => {
         exec(command, { encoding: 'utf8', cwd }, (error, stdout, stderr) => {
             if (error) {
+                console.log(1);
                 reject(error);
             }
             if (stderr) {
+                console.log(2);
                 reject(stderr);
             }
             resolve(stdout)
@@ -19,9 +21,9 @@ async function executeCommand(command, cwd) {
 }
 
 async function run() {
-    const out =
+    const out = await executeCommand('git clone https://github.com/Jodu555/ez-uploader.de', dir)
 
-        console.log(`out: `, out.split('\n'));
+    console.log(`out: `, out.split('\n'));
 
 }
 

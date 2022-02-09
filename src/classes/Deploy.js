@@ -54,10 +54,12 @@ class Deploy {
             command = arr.shift();
             args = arr;
         }
+        console.log(command, args);
         const process = child_process.spawnSync(command, args, { encoding: 'utf8', cwd: this.dir });
         if (process.error) {
             console.log("ERROR: ", process.error);
         }
+        console.log(process.stdout, process.stderr);
         const output = [...process.stdout.split('\n'), ...process.stderr.split('\n')];
         this.appendRecord({ output, success: process.status == 0, status: process.status });
     }

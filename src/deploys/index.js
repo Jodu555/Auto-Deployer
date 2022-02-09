@@ -4,8 +4,8 @@ const { registerDeploy } = require('../utils/utils');
 registerDeploy('Personal-Website', {
     steps: ['Download', 'Deletion', 'Upload'],
     gh_repo_URL: 'https://github.com/Jodu555/Personal-Website',
-    gh_repo_SECRET: 'TEST123',
-    webhooks: ['test'],
+    gh_repo_SECRET: '',
+    webhooks: ['dc-deploy'],
 },
     async (deploy, host, data, config) => {
         deploy.createDeploy();

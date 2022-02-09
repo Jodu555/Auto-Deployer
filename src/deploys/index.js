@@ -37,8 +37,13 @@ registerDeploy('EZ-Uploader', {
         deploy.step();
 
         // await host.connect(config.get('rooti'), '/var/www/html/EzUploader');
-        await host.connect(config.get('dsh'), '/home/DEPLOY');
+        await host.connect(config.get('dsh'), '/home/DEPLOY-WEB');
         await host.upload('', 'Website');
+        host.disconnect();
+        deploy.delete('Website');
+
+        await host.connect(config.get('dsh'), '/home/DEPLOY-PROGRAM');
+        await host.upload();
         host.disconnect();
 
         deploy.deleteDeploy();

@@ -38,7 +38,7 @@ An Selfmade Deployment system for some self education
 
 ```js
 deploy.createDeploy(); // Creates a dir to do the deploy in
-deploy.exec('git pull origin master'); // Executes any ssh-deploy command in the dir
+deploy.exec(`git clone ${data.repository.url} .`); // Executes any ssh-deploy command in the dir the data comes with if you link the deploy
 deploy.step(); // Steps to the next in this case 'Deletion'
 deploy.delete('README.md'); // Deletes on file in the dir
 deploy.delete(['.git', '.gitignore']); // Deletes an array of files in the dir
@@ -60,6 +60,12 @@ deploy.deleteDeploy(); // Deletes the dir where the deploy was done // A Boolean
 - history / h : lists a history of all the already deployed processes
 - info / i : Shows Informations about one specified deployment process
 
+### Projects to Integrate
+
+- [ ] Ez-Uploader
+- [ ] GitHub-Information
+- [ ] Amazon-Price-Tracker
+
 ### Stretch
 
 - [ ] Implement a database
@@ -68,5 +74,5 @@ deploy.deleteDeploy(); // Deletes the dir where the deploy was done // A Boolean
 - [x] Implement multiple deploy hosts
 - [x] Implement a config file
   - [x] Store the server connections there
-- [ ] Discord Webhook Integration
+- [x] Discord Webhook Integration
 - [ ] Implement a native Website renderer so it renders a file default on the slash route

@@ -51,18 +51,15 @@ class Deploy {
     async exec(command) {
         try {
             const output = await this.deepExecPromisify(command, this.dir);
-            console.log(output);
+            this.appendRecord({ output, status: true });
         } catch (error) {
-            console.log(1337, error);
+            this.appendRecord({ error, status: false });
         }
-        // this.appendRecord({ output, success: process.status == 0, status: process.status });
     }
     async deepExecPromisify(command, cwd) {
-        console.log(command);
         return await new Promise((resolve, reject) => {
             child_process.exec(command, { encoding: 'utf8', cwd }, (error, stdout, stderr) => {
                 if (error) {
-                    console.log(1);
                     reject(error);
                 }
                 resolve([...stdout?.split('\n'), ...stderr?.split('\n')]);

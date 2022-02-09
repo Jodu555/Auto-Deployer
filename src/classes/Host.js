@@ -19,8 +19,8 @@ class Host {
         await this.ssh.connect(config);
         this.cwd = initPath;
     }
-    async upload(uploadPath = '') {
-        const files = this.listFiles(this.deploy.dir, path.join(this.cwd, uploadPath));
+    async upload(uploadPath = '', deployPath = '') {
+        const files = this.listFiles(path.join(this.deploy.dir, deployPath), path.join(this.cwd, uploadPath));
 
         const failed = [];
         const succeeded = [];

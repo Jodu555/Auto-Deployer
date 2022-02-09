@@ -49,19 +49,12 @@ class Deploy {
         fs.rmSync(this.dir, { recursive: true });
     }
     async exec(command) {
-        // console.log(command, args);
-        // const process = child_process.spawnSync(command, args, { encoding: 'utf8', cwd: this.dir });
-        // if (process.error) {
-        //     console.log("ERROR: ", process.error);
-        // }
-        // console.log(process.stdout, process.stderr);
-
-        const output = [...this.deepExecPromisify(command, this.dir)];
+        const output = [...await this.deepExecPromisify(command, this.dir)];
         this.appendRecord({ output, success: process.status == 0, status: process.status });
     }
     async deepExecPromisify(command, cwd) {
         return await new Promise((resolve, reject) => {
-            exec(command, { encoding: 'utf8', cwd }, (error, stdout, stderr) => {
+            child_process.exec(command, { encoding: 'utf8', cwd }, (error, stdout, stderr) => {
                 if (error) {
                     reject(error);
                 }

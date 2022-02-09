@@ -5,7 +5,7 @@
 	"main": "index.js",
 	"scripts": {
 		"start": "node --max-old-space-size=15192 src/index.js",
-		"test": "node dream.js",
+		"test": "node test.js",
 		"dev": "nodemon --max-old-space-size=15192 src/index.js --ignore *.json --ignore deployments --ignore history"
 	},
 	"repository": {

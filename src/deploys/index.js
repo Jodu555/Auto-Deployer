@@ -23,7 +23,7 @@ registerDeploy('Personal-Website', {
     });
 
 registerDeploy('EZ-Uploader', {
-    steps: ['Download', 'Deletion', 'Installation', 'Upload'],
+    steps: ['Download', 'Deletion', 'Website-Uploader', 'Website-Deletion', 'Installation', 'Program-Upload'],
     gh_repo_URL: 'https://github.com/Jodu555/ez-uploader.de',
     gh_repo_SECRET: '',
     webhooks: ['dc-deploy'],
@@ -40,8 +40,11 @@ registerDeploy('EZ-Uploader', {
         await host.connect(config.get('dsh'), '/home/DEPLOY-WEB');
         await host.upload('', 'Website');
         host.disconnect();
+        deploy.step();
         deploy.delete('Website');
-
+        deploy.step();
+        deploy.exec(`npm i`);
+        deploy.step();
         await host.connect(config.get('dsh'), '/home/DEPLOY-PROGRAM');
         await host.upload();
         host.disconnect();

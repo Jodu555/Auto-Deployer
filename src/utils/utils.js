@@ -19,8 +19,8 @@ const callDeepDeploy = async (data, GH_DATA) => {
     const host = new Host(deploy);
     console.log('Technical deployment call!');
     GH_DATA = { ...GH_DATA, repository: { ...GH_DATA.repository, url: data.gh_repo_URL } }
-    console.log(GH_DATA);
-    // await cb(deploy, host, GH_DATA, config);
+    // console.log(GH_DATA);
+    await cb(deploy, host, GH_DATA, config);
 }
 
 const callDeployByRepoURL = async (url, GH_DATA) => {

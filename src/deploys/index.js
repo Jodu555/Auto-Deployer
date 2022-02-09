@@ -24,7 +24,7 @@ registerDeploy('Personal-Website', {
 
 registerDeploy('EZ-Uploader', {
     steps: ['Download', 'Deletion', 'Installation', 'Upload'],
-    gh_repo_URL: 'https://github.com/Jodu555/Personal-Website',
+    gh_repo_URL: 'https://github.com/Jodu555/ez-uploader.de',
     gh_repo_SECRET: '',
     webhooks: ['dc-deploy'],
 },
@@ -36,7 +36,8 @@ registerDeploy('EZ-Uploader', {
         deploy.delete(['.git', '.gitignore']);
         deploy.step();
 
-        await host.connect(config.get('rooti'), '/var/www/html/EzUploader');
+        // await host.connect(config.get('rooti'), '/var/www/html/EzUploader');
+        await host.connect(config.get('dsh'), '/home/DEPLOY');
         await host.upload('', 'Website');
         host.disconnect();
 

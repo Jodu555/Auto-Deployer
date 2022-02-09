@@ -11,19 +11,18 @@ async function executeCommand(command, cwd) {
                 console.log(1);
                 reject(error);
             }
-            if (stderr) {
-                console.log(2);
-                reject(stderr);
-            }
-            resolve(stdout)
+            // { out: stdout?.split('\n'), err: stderr?.split('\n') }
+            resolve([...stdout?.split('\n'), ...stderr?.split('\n')]);
         });
     })
 }
 
 async function run() {
-    const out = await executeCommand('git clone https://github.com/Jodu555/ez-uploader.de', dir)
+    const out = await executeCommand('git clone https://github.com/Jodu555/ez-uploader.de .', dir)
 
-    console.log(`out: `, out.split('\n'));
+    console.log('OOO', out);
+
+    // console.log(`out: `, out.split('\n'));
 
 }
 

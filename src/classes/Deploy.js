@@ -2,6 +2,8 @@ const fs = require('fs');
 const path = require('path');
 const child_process = require('child_process');
 const merge = require('deepmerge');
+const { CommandManager } = require('@jodu555/commandmanager');
+const commandManager = CommandManager.getCommandManager();
 const Webhook = require('./Webhook');
 
 const deploymentsDirectory = path.join(process.cwd(), 'deployments');
@@ -38,6 +40,7 @@ class Deploy {
         this.record['0'] = { time: Date.now(), dir: this.dir };
     }
     deleteDeploy(save = true) {
+        commandManager.getWriter().end();
         const time = Date.now();
         const timeDifference = time - this.record['0'].time;
         this.record['-1'] = { time, saved: save, timeDifference };
@@ -73,6 +76,7 @@ class Deploy {
             this.stepIdx++;
             this.currStep = null;
         }
+        commandManager.getWriter().deepSameLineClear('Step: ' + this.currentStep());
     }
     delete(arg) {
         arg = Array.isArray(arg) ? arg : [arg];

@@ -50,3 +50,24 @@ registerDeploy('EZ-Uploader', {
 
         deploy.deleteDeploy();
     });
+
+registerDeploy('GitHub-Info-API', {
+    steps: ['Download', 'Deletion', 'Installation', 'Upload'],
+    gh_repo_URL: 'https://github.com/Jodu555/github-information-api',
+    gh_repo_SECRET: '',
+    webhooks: ['dc-deploy'],
+},
+    async (deploy, host, data, config) => {
+        deploy.createDeploy();
+        await deploy.exec(`git clone ${data.repository.url} .`);
+        deploy.step();
+        deploy.delete('README.md');
+        deploy.delete(['.git', '.gitignore']);
+        deploy.step();
+        await deploy.exec(`npm i`);
+        deploy.step();
+        await host.connect(config.get('rooti'), '/var/www/html/root');
+        await host.upload();
+        host.disconnect();
+        deploy.deleteDeploy();
+    });

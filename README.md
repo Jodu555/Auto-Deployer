@@ -62,8 +62,8 @@ deploy.deleteDeploy(); // Deletes the dir where the deploy was done // A Boolean
 
 ### Projects to Integrate
 
-- [ ] Ez-Uploader (Website)
-- [ ] Dev-Ez-Uploader (Dev Edittion)
+- [x] Ez-Uploader (Website)
+- [x] Dev-Ez-Uploader (Dev Edittion)
 - [ ] GitHub-Information
 - [ ] Amazon-Price-Tracker
 

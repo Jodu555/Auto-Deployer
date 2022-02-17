@@ -19,6 +19,9 @@ const webhook = (req, res, next) => {
         const repo = getDeployByRepoUrl(data.repository.url);
         verify(req, repo.gh_repo_SECRET);
         callDeployByRepoURL(data.repository.url, data);
+        res.send(200);
+    } else {
+        next(new Error('Signature verification failed'));
     }
 
 };

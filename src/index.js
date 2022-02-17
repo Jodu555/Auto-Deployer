@@ -45,7 +45,11 @@ const { errorHandling, notFound, githubSignatureVerifier } = require('./utils/mi
 
 const { webhook } = require('./routes/webhook');
 
-app.post('/webhook', githubSignatureVerifier, webhook);
+app.post(
+    '/webhook',
+    // githubSignatureVerifier,
+    webhook
+);
 
 
 app.use('*', notFound);

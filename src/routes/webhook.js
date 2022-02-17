@@ -23,8 +23,9 @@ const webhook = (req, res, next) => {
 
 };
 
-const verify = () => {
-
+const verify = (req, secret) => {
+    const computedSignature = `sha1=${crypto.createHmac("sha1", secret).update(JSON.stringify(req.body)).digest("hex")}`;
+    return (crypto.timingSafeEqual(Buffer.from(req.headers['x-hub-signature']), Buffer.from(computedSignature)));
 }
 
 module.exports = {

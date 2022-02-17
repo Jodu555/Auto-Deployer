@@ -15,10 +15,17 @@ const webhook = (req, res, next) => {
         pusher
     }
 
-    if (hasDeployByRepoUrl(data.repository.url))
+    if (hasDeployByRepoUrl(data.repository.url)) {
+        const repo = getDeployByRepoUrl(data.repository.url);
+        verify(req, repo.gh_repo_SECRET);
         callDeployByRepoURL(data.repository.url, data);
+    }
 
 };
+
+const verify = () => {
+
+}
 
 module.exports = {
     webhook

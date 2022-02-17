@@ -66,7 +66,7 @@ registerDeploy('GitHub-Info-API', {
         deploy.step();
         await deploy.exec(`npm i`);
         deploy.step();
-        await host.connect(config.get('rooti'), '/var/www/html/root');
+        await host.connect(config.get('rooti'), '/home/Backend/github-information-api');
         await host.upload();
         host.disconnect();
         deploy.deleteDeploy();

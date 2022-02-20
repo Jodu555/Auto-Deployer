@@ -23,7 +23,6 @@ const webhook = (req, res, next) => {
     } else {
         next(new Error('Signature verification failed'));
     }
-
 };
 
 const verify = (req, secret) => {

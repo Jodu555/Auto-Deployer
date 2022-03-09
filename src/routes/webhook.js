@@ -26,13 +26,14 @@ const webhook = (req, res, next) => {
 
             console.log(3, 'Validated Secret');
             callDeployByRepoURL(data.repository.url, data);
-            res.send(200);
+            res.sendStatus(200);
         } else {
             next(new Error('Signature verification failed'));
         }
     } catch (error) {
+        console.log(error);
         console.log('Got Test Commit, or a fake');
-        res.send(200);
+        res.sendStatus(200);
     }
 };
 

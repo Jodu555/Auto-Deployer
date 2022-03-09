@@ -17,14 +17,12 @@ const webhook = (req, res, next) => {
             commit: { commit_id, message, timestamp, author, added, removed, modified },
             pusher
         }
-        console.log(1, data.repository.url);
         if (hasDeployByRepoUrl(data.repository.url)) {
             const repo = getDeployByRepoUrl(data.repository.url);
-            console.log(2, repo);
 
             verify(req, repo.gh_repo_SECRET);
 
-            console.log(3, 'Validated Secret');
+            console.log('Goot Hook Request & Validated Secret');
             callDeployByRepoURL(data.repository.url, data);
             res.sendStatus(200);
         } else {

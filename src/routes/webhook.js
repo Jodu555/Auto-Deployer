@@ -2,30 +2,37 @@ const { callDeployByRepoURL, hasDeployByRepoUrl } = require('../utils/utils');
 
 const webhook = (req, res, next) => {
     console.log(req.body);
-    const { repository, head_commit: commit, pusher } = req.body;
+    try {
 
-    const { name, id, full_name, url, description } = repository;
-    const { id: commit_id, message, timestamp, author, added, removed, modified } = commit;
 
-    console.log(name, id, full_name, url, description, pusher, commit_id, message, timestamp, author, added, removed, modified);
+        const { repository, head_commit: commit, pusher } = req.body;
 
-    const data = {
-        repository: { name, id, full_name, url, description },
-        commit: { commit_id, message, timestamp, author, added, removed, modified },
-        pusher
-    }
-    console.log(1, data.repository.url);
-    if (hasDeployByRepoUrl(data.repository.url)) {
-        const repo = getDeployByRepoUrl(data.repository.url);
-        console.log(2, repo);
+        const { name, id, full_name, url, description } = repository;
+        const { id: commit_id, message, timestamp, author, added, removed, modified } = commit;
 
-        verify(req, repo.gh_repo_SECRET);
+        console.log(name, id, full_name, url, description, pusher, commit_id, message, timestamp, author, added, removed, modified);
 
-        console.log(3, 'Validated Secret');
-        callDeployByRepoURL(data.repository.url, data);
+        const data = {
+            repository: { name, id, full_name, url, description },
+            commit: { commit_id, message, timestamp, author, added, removed, modified },
+            pusher
+        }
+        console.log(1, data.repository.url);
+        if (hasDeployByRepoUrl(data.repository.url)) {
+            const repo = getDeployByRepoUrl(data.repository.url);
+            console.log(2, repo);
+
+            verify(req, repo.gh_repo_SECRET);
+
+            console.log(3, 'Validated Secret');
+            callDeployByRepoURL(data.repository.url, data);
+            res.send(200);
+        } else {
+            next(new Error('Signature verification failed'));
+        }
+    } catch (error) {
+        console.log('Got Test Commit, or a fake');
         res.send(200);
-    } else {
-        next(new Error('Signature verification failed'));
     }
 };
 

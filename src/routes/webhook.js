@@ -36,7 +36,7 @@ const webhook = (req, res, next) => {
         res.sendStatus(200);
     }
 };
-
+const crypto = require('crypto');
 const verify = (req, secret) => {
     const computedSignature = `sha1=${crypto.createHmac("sha1", secret).update(JSON.stringify(req.body)).digest("hex")}`;
     return (crypto.timingSafeEqual(Buffer.from(req.headers['x-hub-signature']), Buffer.from(computedSignature)));

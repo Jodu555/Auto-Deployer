@@ -1,4 +1,4 @@
-const { callDeployByRepoURL, hasDeployByRepoUrl } = require('../utils/utils');
+const { callDeployByRepoURL, hasDeployByRepoUrl, getDeployByRepoUrl } = require('../utils/utils');
 
 const webhook = (req, res, next) => {
     console.log(req.body);

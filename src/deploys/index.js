@@ -44,7 +44,7 @@ registerDeploy('EZ-Uploader', {
         deploy.step();
         await deploy.exec(`npm i`);
         deploy.step();
-        await host.connect(config.get('fr'), '/media/all/DEPLOY-PROGRAM');
+        await host.connect(config.get('rooti'), '/home/Backend/ez-uploader');
         await host.upload();
         host.disconnect();
 

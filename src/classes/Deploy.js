@@ -21,7 +21,7 @@ class Deploy {
     }
     notify(message = null) {
         const confHooks = require('../utils/utils').getConfig().data.webhooks;
-        const hooks = this.webhooks.map(e => new Webhook(confHooks.find(x => x.name)));
+        const hooks = this.webhooks.map(e => new Webhook(confHooks.find(x => x.name == e)));
         if (message == null) {
             message = `Deployment Finished: ${this.ID} in ${this.record['-1'].timeDifference} milliseconds`;
         }

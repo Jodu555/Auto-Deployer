@@ -8,6 +8,7 @@ class Webhook {
     }
 
     async call(content) {
+
         if (this.type == 'discord')
             await axios.post(this.url, { content });
 

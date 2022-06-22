@@ -39,7 +39,7 @@ class Deploy {
         this.record = {};
         this.record['0'] = { time: Date.now(), dir: this.dir };
     }
-    deleteDeploy(save = true) {
+    deleteDeploy(save = true, del = true) {
         commandManager.getWriter().end();
         const time = Date.now();
         const timeDifference = time - this.record['0'].time;
@@ -49,7 +49,7 @@ class Deploy {
             fs.writeFileSync(historyFile, JSON.stringify(this.record, null, 2), 'utf-8');
         }
         this.notify();
-        fs.rmSync(this.dir, { recursive: true });
+        del && fs.rmSync(this.dir, { recursive: true });
     }
     async exec(command, cwd = this.dir) {
         try {

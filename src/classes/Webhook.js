@@ -8,7 +8,11 @@ class Webhook {
     }
 
     async call(content) {
-        await axios.post(this.url, { content });
+        if (type == 'discord')
+            await axios.post(this.url, { content });
+
+        if (type == 'slack')
+            await axios.post(this.url, { text: content });
     }
 }
 

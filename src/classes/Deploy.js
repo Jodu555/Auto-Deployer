@@ -51,9 +51,9 @@ class Deploy {
         this.notify();
         fs.rmSync(this.dir, { recursive: true });
     }
-    async exec(command) {
+    async exec(command, cwd = this.dir) {
         try {
-            const output = await this.deepExecPromisify(command, this.dir);
+            const output = await this.deepExecPromisify(command, cwd);
             this.appendRecord({ output, status: true });
         } catch (error) {
             this.appendRecord({ error, status: false });

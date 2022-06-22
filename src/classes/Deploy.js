@@ -56,6 +56,7 @@ class Deploy {
             const output = await this.deepExecPromisify(command, cwd);
             this.appendRecord({ output, status: true });
         } catch (error) {
+            // console.log(error);
             this.appendRecord({ error, status: false });
         }
     }
@@ -63,7 +64,7 @@ class Deploy {
         return await new Promise((resolve, reject) => {
             child_process.exec(command, { encoding: 'utf8', cwd }, (error, stdout, stderr) => {
                 if (error) {
-                    reject(error);
+                    reject({ error, stdout: stdout?.trim()?.split('\n'), stderr: stderr?.trim()?.split('\n') });
                 }
                 resolve([...stdout?.split('\n'), ...stderr?.split('\n')]);
             });
@@ -77,6 +78,13 @@ class Deploy {
             this.currStep = null;
         }
         commandManager.getWriter().deepSameLineClear('Step: ' + this.currentStep());
+    }
+    async wait(ms) {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                resolve()
+            }, ms);
+        })
     }
     delete(arg) {
         arg = Array.isArray(arg) ? arg : [arg];

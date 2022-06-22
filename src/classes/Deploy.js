@@ -32,10 +32,10 @@ class Deploy {
     currentStep() {
         return this.currStep ? this.currStep : this.steps[this.stepIdx];
     }
-    createDeploy() {
+    createDeploy(del = true) {
         this.dir = path.join(deploymentsDirectory, `#${this.ID} - Deployment`);
-        if (fs.existsSync(this.dir)) fs.rmSync(this.dir, { recursive: true });
-        fs.mkdirSync(this.dir);
+        if (fs.existsSync(this.dir) && del) fs.rmSync(this.dir, { recursive: true });
+        !fs.existsSync(this.dir) && fs.mkdirSync(this.dir);
         this.record = {};
         this.record['0'] = { time: Date.now(), dir: this.dir };
     }
@@ -89,10 +89,12 @@ class Deploy {
     delete(arg) {
         arg = Array.isArray(arg) ? arg : [arg];
         arg.forEach(node => {
-            if (fs.statSync(path.join(this.dir, node)).isDirectory()) {
-                fs.rmSync(path.join(this.dir, node), { recursive: true });
-            } else {
-                fs.rmSync(path.join(this.dir, node));
+            if (fs.existsSync(path.join(this.dir, node))) {
+                if (fs.statSync(path.join(this.dir, node)).isDirectory()) {
+                    fs.rmSync(path.join(this.dir, node), { recursive: true });
+                } else {
+                    fs.rmSync(path.join(this.dir, node));
+                }
             }
         });
         this.appendRecord({ deletedFiles: arg })

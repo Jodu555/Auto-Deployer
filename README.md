@@ -76,6 +76,6 @@ deploy.deleteDeploy(); // Deletes the dir where the deploy was done // A Boolean
 - [x] Implement a config file
   - [x] Store the server connections there
 - [x] Discord Webhook Integration
-- [ ] Slack Webhook Integration
+- [x] Slack Webhook Integration
 - [ ] Implement a native Website renderer so it renders a file default on the slash route
 - [ ] Implement a simple api to get deploy infos

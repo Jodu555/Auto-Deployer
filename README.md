@@ -62,10 +62,12 @@ deploy.deleteDeploy(); // Deletes the dir where the deploy was done // A Boolean
 
 ### Projects to Integrate
 
+- [x] Personal Website
 - [x] Ez-Uploader (Website)
 - [x] Dev-Ez-Uploader (Dev Edittion)
-- [ ] GitHub-Information
+- [x] GitHub-Information
 - [ ] Amazon-Price-Tracker
+- [ ] CineFinn
 
 ### Stretch
 

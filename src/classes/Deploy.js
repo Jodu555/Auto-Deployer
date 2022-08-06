@@ -56,7 +56,7 @@ class Deploy {
             const output = await this.deepExecPromisify(command, cwd);
             this.appendRecord({ output, status: true });
         } catch (error) {
-            // console.log(error);
+            console.log('Catched Error', error);
             this.appendRecord({ error, status: false });
         }
     }

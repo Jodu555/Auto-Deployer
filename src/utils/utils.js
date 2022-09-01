@@ -9,6 +9,21 @@ const setupConfig = () => {
     config = new Config();
 };
 
+// deploy, host, data, config
+
+/**
+ * @callback deployCallCallback
+ * @param {Deploy} deploy
+ * @param {Host} host
+ * @param {Object} data
+ * @param {config} config
+ */
+
+/**
+ * @param  {String} name
+ * @param  {Object} settings
+ * @param  {deployCallCallback} cb
+ */
 const registerDeploy = (name, settings, cb) => {
     deploys.push({ ...settings, name, cb });
 }

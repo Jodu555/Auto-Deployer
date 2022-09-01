@@ -51,14 +51,28 @@ class Deploy {
         this.notify();
         del && fs.rmSync(this.dir, { recursive: true });
     }
+    async collectGitInformations() {
+        this.step('GitHubInformation');
+        const output = await this.exec('git show --oneline -s');
+        this.currStep = null;
+    }
     async exec(command, cwd = this.dir) {
+        let outputRecord;
         try {
             const output = await this.deepExecPromisify(command, cwd);
-            this.appendRecord({ output, status: true });
+            outputRecord = { output, status: true }
         } catch (error) {
             console.log('Catched Error', error, command, cwd);
-            this.appendRecord({ error, status: false });
+            outputRecord = { error, status: false }
         }
+
+        const obj = {
+            name: command,
+            ...outputRecord
+        }
+
+        this.appendRecord(obj);
+        return outputRecord;
     }
     async deepExecPromisify(command, cwd) {
         return await new Promise((resolve, reject) => {

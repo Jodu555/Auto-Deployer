@@ -67,7 +67,7 @@ deploy.deleteDeploy(); // Deletes the dir where the deploy was done // A Boolean
 - [x] Dev-Ez-Uploader (Dev Edittion)
 - [x] GitHub-Information
 - [ ] Amazon-Price-Tracker
-- [ ] CineFinn
+- [x] CineFinn
 
 ### Stretch
 
@@ -79,6 +79,7 @@ deploy.deleteDeploy(); // Deletes the dir where the deploy was done // A Boolean
   - [x] Store the server connections there
 - [x] Discord Webhook Integration
 - [x] Slack Webhook Integration
+- [ ] Upgrade to typescript
 - [ ] On deploy store the current commit ID to trace back if something happens
 - [ ] Implement a native Website renderer so it renders a file default on the slash route
 - [ ] Implement a simple api to get deploy infos

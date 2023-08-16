@@ -10,7 +10,7 @@ const deploymentsDirectory = path.join(process.cwd(), 'deployments');
 const historyDirectory = path.join(process.cwd(), 'history');
 
 class Deploy {
-	constructor(ID, { steps, webhooks }) {
+	constructor(ID, { steps, webhooks }, dry = false) {
 		this.ID = ID;
 		this.steps = steps;
 		this.webhooks = webhooks;
@@ -18,8 +18,10 @@ class Deploy {
 		this.dir = null;
 		this.currStep = null;
 		this.record = null;
+		this.dry = dry;
 	}
 	notify(message = null) {
+		if (this.dry) return;
 		const confHooks = require('../utils/utils').getConfig().data.webhooks;
 		const hooks = this.webhooks.map((e) => new Webhook(confHooks.find((x) => x.name == e)));
 		if (message == null) {

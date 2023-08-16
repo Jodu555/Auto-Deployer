@@ -10,7 +10,7 @@ class Host {
 		this.dry = dry;
 	}
 	async connect(host, username, password, initPath) {
-		if (dry) return;
+		if (this.dry) return;
 		let config = {};
 		if (host.host) {
 			config = host;
@@ -22,7 +22,7 @@ class Host {
 		this.cwd = initPath;
 	}
 	async upload(uploadPath = '', deployPath = '') {
-		if (dry) return;
+		if (this.dry) return;
 		const files = this.listFiles(path.join(this.deploy.dir, deployPath), path.join(this.cwd, uploadPath));
 
 		const failed = [];
@@ -40,7 +40,7 @@ class Host {
 		this.deploy.appendRecord({ success: failed.length == 0, failed, succeeded });
 	}
 	listFiles(lcPath, rmPath) {
-		if (dry) return;
+		if (this.dry) return;
 		const files = [];
 		fs.readdirSync(lcPath)
 			.map((e) => {
@@ -56,11 +56,11 @@ class Host {
 		return files;
 	}
 	async exec() {
-		if (dry) return;
+		if (this.dry) return;
 		//Important: This method executes an ssh command direct on your Host Machine
 	}
 	disconnect() {
-		if (dry) return;
+		if (this.dry) return;
 		this.ssh.dispose();
 	}
 }

@@ -29,7 +29,7 @@ const registerDeploy = (name, settings, cb) => {
 
 const callDeepDeploy = async (data, GH_DATA, dry) => {
 	const { name, steps, cb } = data;
-	const deploy = new Deploy(name, data);
+	const deploy = new Deploy(name, data, dry);
 	const host = new Host(deploy, dry);
 	GH_DATA = { ...GH_DATA, repository: { ...GH_DATA.repository, url: data.gh_repo_URL } };
 	// console.log(4, 'Technical Deployment', data, GH_DATA);

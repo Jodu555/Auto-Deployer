@@ -8,10 +8,11 @@ commandManager.registerCommand(
 	new Command(['trigger', 't'], 'trigger [name]', 'Triggers a Deployment without the github Hook', async (command, [...args], scope) => {
 		const name = args[1];
 		const dry = args[2];
+		const isDry = dry == '--dry=true' || false;
 		if (!name) return 'Please Provide the name!';
 		if (!hasDeployByName(name)) return 'A Deploy with this name dont exist!';
-		console.log('Triggered Deployment: ' + name);
-		await callDeployByName(name, { scope: 'USER' }, dry == '--dry=true');
+		console.log('Triggered Deployment: ' + name, { state: { dry: isDry } });
+		await callDeployByName(name, { scope: 'USER' }, isDry);
 		return 'Deployment Finished';
 	})
 );

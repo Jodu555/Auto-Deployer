@@ -21,7 +21,13 @@ require('./deploys/index');
 
 const app = express();
 app.use(cors());
-app.use(morgan('dev'));
+app.use(
+	morgan('dev', {
+		skip: (req, res) => {
+			return req.originalUrl.includes('/status');
+		},
+	})
+);
 app.use(helmet());
 app.use(express.json());
 
@@ -42,6 +48,10 @@ const { errorHandling, notFound, githubSignatureVerifier } = require('./utils/mi
 
 const { webhook } = require('./routes/webhook');
 const Webhook = require('./classes/Webhook');
+
+app.get('/status', (req, res) => {
+	res.status(200).json({});
+}); // For some Uptime check
 
 app.post(
 	'/webhook',
